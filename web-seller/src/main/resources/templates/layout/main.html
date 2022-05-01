@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<!-- <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">My website</title> -->
+	<title layout:title-pattern="$CONTENT_TITLE">My website</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
+</head>
+
+<body>
+	<div class="root">
+		<div class="header">
+			<div th:replace="fragments/header:: header"></div>
+		</div>
+		<div class="wrap">
+			<div layout:fragment="content">
+
+				rendering layout
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+	<script th:src="@{/js/popper.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+
+</html>

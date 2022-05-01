@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:xmlns="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/layout-page-admin}">
+
+</html>
+
+<head>
+    <title>add-product</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="app">
+
+        <div layout:fragment="content" class="content d-flex justify-content-center">
+            <form action="#" class="form w-75 mt-5 d-flex flex-column justify-content-center align-items-center"
+                method="post" enctype="multipart/form-data">
+                <div class="row justify-content-center w-75">
+                    <div class="col col-8 ">
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Tên xe</span>
+                            <input class="form-control" type="text" placeholder="Tên xe" name="name" id="name">
+                        </div>
+                        <div class="row mb-2">
+                            <div class="input-group col">
+                                <span class="input-group-text">Chiều Dài(mm)</span>
+                                <input class="form-control" type="number" name="chieuDai" id="chieuDai">
+                            </div>
+                            <div class="input-group col">
+                                <span class="input-group-text">Chiều rộng(mm)</span>
+                                <input class="form-control" type="number" name="chieuRong" id="chieuRong">
+                            </div>
+                            <div class="input-group col">
+                                <span class="input-group-text">Chiều cao(mm)</span>
+                                <input class="form-control" type="number" name="chieuCao" id="chieuCao">
+                            </div>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Trọng lượng(kg)</span>
+                            <input class="form-control" type="number" name="" id="">
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Tải trọng(kg)</span>
+                            <input class="form-control" type="number" name="" id="">
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Acquy</span>
+                            <input class="form-control" type="number" name="" id="">
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Thời gian sạc</span>
+                            <input class="form-control" type="number" name="" id="">
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Công suất</span>
+                            <input class="form-control" type="number" name="" id="">
+                        </div>
+                        <div class="row mb-2">
+                            <div class="input-group col">
+                                <span class="input-group-text">Vận tốc tối thiểu(km/h)</span>
+                                <input class="form-control" type="number" name="" id="">
+                            </div>
+                            <div class="input-group col">
+                                <span class="input-group-text">Vận tốc tối đa(km/h)</span>
+                                <input class="form-control" type="number" name="" id="">
+                            </div>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Quảng đường đi được</span>
+                            <input class="form-control" type="number" name="" id="">
+                        </div>
+                        <select class="form-select mb-2">
+                            <option selected>Nhà sản xuất</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+
+
+                    </div>
+                    <div class="col col-4 row flex-column align-items-center justify-content-center">
+                        <div class="wrap-image d-flex justify-content-center mb-3">
+                            <img id="outImage" src="" th:src="@{/image/default-image.jpg}" alt="" class="rounded product-image w-75">
+                        </div>
+                        <div class="input-group input-choose-img mb-3 w-75">
+                            <input type="file" class="form-control" id="image">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-50 align-self-center">
+                    <button type="submit" class="btn btn-primary w-100">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('image').onchange = function (evt) {
+            var tgt = evt.target || window.event.srcElement,
+                files = tgt.files;
+
+            // FileReader support
+            if (FileReader && files && files.length) {
+                var fr = new FileReader();
+                fr.onload = function () {
+                    document.getElementById("outImage").src = fr.result;
+                }
+                fr.readAsDataURL(files[0]);
+            }
+
+            // Not supported
+            else {
+                // fallback -- perhaps submit the input to an iframe and temporarily store
+                // them on the server until the user's session ends.
+            }
+        }
+    </script>
+</body>
+
+</html>
