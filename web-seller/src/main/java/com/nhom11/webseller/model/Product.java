@@ -35,15 +35,24 @@ public class Product {
 	private int length;
 	private int width;
 	private int height;
-	private int maximum_load;
-	private int minimum_maximum_speed;
-	private int maximum_maximum_speed;
-	private int batery;
+	@Column(name = "maximum_load")
+	private int maximumLoad;
+	
+	
+	@Column(name = "minimum_maximum_speed")
+	private int minimumMaximumSpeed;
+	@Column(name = "maximum_maximum_speed")
+	private int maximumMaximumSpeed;
+	private int battery;
 	private int weight;
-	private int minimum_charging_time;
-	private int maximum_charging_time;
-	private int distance_min;
-	private int distance_max;
+	@Column(name = "minimum_charging_time")
+	private int minimumChargingTime;
+	@Column(name = "maximum_charging_time")
+	private int maximumChargingTime;
+	@Column(name = "distance_min")
+	private int distanceMin;
+	@Column(name = "distance_max")
+	private int distanceMax;
 	private float price;
 	
 	@Column(columnDefinition = "nvarchar(255)", nullable = false)

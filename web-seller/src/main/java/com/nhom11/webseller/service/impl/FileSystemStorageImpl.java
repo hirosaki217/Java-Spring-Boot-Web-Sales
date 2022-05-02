@@ -41,11 +41,12 @@ public class FileSystemStorageImpl implements StorageService{
 				throw new StorageException("failed to store empty file");
 			Path destinationFile = this.rootLocation.resolve(Paths.get(storedFilename))
 					.normalize().toAbsolutePath();
+			System.out.println(destinationFile.toString());
 			if(!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath()))
 				throw new StorageException("Cannot store file outside current directory");
-			try(InputStream inputStream = file.getInputStream()){
-				Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
-			}
+//			try(InputStream inputStream = file.getInputStream()){
+//				Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
+//			}
 		} catch (Exception e) {
 			throw new StorageException("Failed to store file ",e);
 		}

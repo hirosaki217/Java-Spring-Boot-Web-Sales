@@ -15,77 +15,95 @@
     <div class="app">
 
         <div layout:fragment="content" class="content d-flex justify-content-center">
-            <form action="#" class="form w-75 mt-5 d-flex flex-column justify-content-center align-items-center"
-                method="post" enctype="multipart/form-data">
+            <form action="#" th:action="@{/admin/products}" class="form w-75 mt-5 d-flex flex-column justify-content-center align-items-center"
+                method="post" enctype="multipart/form-data" th:object="${product}">
                 <div class="row justify-content-center w-75">
                     <div class="col col-8 ">
                         <div class="input-group mb-2">
                             <span class="input-group-text">Tên xe</span>
-                            <input class="form-control" type="text" placeholder="Tên xe" name="name" id="name">
+                            <input class="form-control" type="text" placeholder="Tên xe" name="name" id="name" th:field="*{name}">
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                         </div>
                         <div class="row mb-2">
                             <div class="input-group col">
                                 <span class="input-group-text">Chiều Dài(mm)</span>
-                                <input class="form-control" type="number" name="chieuDai" id="chieuDai">
+                                <input class="form-control" type="number" name="chieuDai" id="chieuDai" th:field="*{length}">
                             </div>
                             <div class="input-group col">
                                 <span class="input-group-text">Chiều rộng(mm)</span>
-                                <input class="form-control" type="number" name="chieuRong" id="chieuRong">
+                                <input class="form-control" type="number" name="chieuRong" id="chieuRong" th:field="*{width}">
                             </div>
                             <div class="input-group col">
                                 <span class="input-group-text">Chiều cao(mm)</span>
-                                <input class="form-control" type="number" name="chieuCao" id="chieuCao">
+                                <input class="form-control" type="number" name="chieuCao" id="chieuCao" th:field="*{height}">
                             </div>
                         </div>
                         <div class="input-group mb-2">
                             <span class="input-group-text">Trọng lượng(kg)</span>
-                            <input class="form-control" type="number" name="" id="">
+                            <input class="form-control" type="number" name="" id="" th:field="*{weight}">
                         </div>
                         <div class="input-group mb-2">
                             <span class="input-group-text">Tải trọng(kg)</span>
-                            <input class="form-control" type="number" name="" id="">
+                            <input class="form-control" type="number" name="" id="" th:field="*{maximumLoad}">
                         </div>
                         <div class="input-group mb-2">
                             <span class="input-group-text">Acquy</span>
-                            <input class="form-control" type="number" name="" id="">
-                        </div>
-                        <div class="input-group mb-2">
-                            <span class="input-group-text">Thời gian sạc</span>
-                            <input class="form-control" type="number" name="" id="">
-                        </div>
-                        <div class="input-group mb-2">
-                            <span class="input-group-text">Công suất</span>
-                            <input class="form-control" type="number" name="" id="">
+                            <input class="form-control" type="number" name="" id="" th:field="*{battery}">
                         </div>
                         <div class="row mb-2">
                             <div class="input-group col">
-                                <span class="input-group-text">Vận tốc tối thiểu(km/h)</span>
-                                <input class="form-control" type="number" name="" id="">
+                                <span class="input-group-text">Thời gian sạc: </span>
                             </div>
                             <div class="input-group col">
-                                <span class="input-group-text">Vận tốc tối đa(km/h)</span>
-                                <input class="form-control" type="number" name="" id="">
+                                <span class="input-group-text">từ </span>
+                                <input class="form-control" type="number" name="thoiGianSacMin" id="thoiGianSacMin" th:field="*{minimumChargingTime}">
+                            </div>
+                            <div class="input-group col">
+                                <span class="input-group-text">đến</span>
+                                <input class="form-control" type="number" name="thoiGianSacMax" id="thoiGianSacMax" th:field="*{maximumChargingTime}">
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="input-group col">
+                                <span class="input-group-text">Vận tốc xe (km/h): </span>
+                            </div>
+                            <div class="input-group col">
+                                <span class="input-group-text">từ</span>
+                                <input class="form-control" type="number" name="" id="" th:field="*{minimumMaximumSpeed}">
+                            </div>
+                            <div class="input-group col">
+                                <span class="input-group-text">đến</span>
+                                <input class="form-control" type="number" name="" id="" th:field="*{maximumMaximumSpeed}">
                             </div>
                         </div>
                         <div class="input-group mb-2">
-                            <span class="input-group-text">Quảng đường đi được</span>
-                            <input class="form-control" type="number" name="" id="">
+                            <span class="input-group-text">Quảng đường đi được (km)</span>
+                            <div class="input-group col">
+                                <span class="input-group-text">từ</span>
+                                <input class="form-control" type="number" name="" id="" th:field="*{distanceMin}">
+                            </div>
+                            <div class="input-group col">
+                                <span class="input-group-text">đến</span>
+                                <input class="form-control" type="number" name="" id="" th:field="*{distanceMax}">
+                            </div>
                         </div>
-                        <select class="form-select mb-2">
-                            <option selected>Nhà sản xuất</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Giá xe</span>
+                            <input class="form-control" type="number" name="" id="" th:field="*{price}">
+                        </div>
+                        <select  class="form-select mb-2" th:field="*{manufacturerId}">
+                            <option value="0" selected>Nhà sản xuất</option>
+                            <option th:each="manufacturer : ${manufacturers}"  th:value="${manufacturer.id}" th:text="${manufacturer.name}"></option>
                         </select>
 
 
                     </div>
                     <div class="col col-4 row flex-column align-items-center justify-content-center">
                         <div class="wrap-image d-flex justify-content-center mb-3">
-                            <img id="outImage" src="" th:src="@{/image/default-image.jpg}" alt="" class="rounded product-image w-75">
+                            <img id="image" src="" th:src="@{/image/default-image.jpg}" alt="" class="rounded product-image w-75">
                         </div>
                         <div class="input-group input-choose-img mb-3 w-75">
-                            <input type="file" class="form-control" id="image">
+                            <input type="file" class="form-control" name="imageFile" id="imageFile">
                         </div>
                     </div>
                 </div>
@@ -97,7 +115,7 @@
         </div>
     </div>
     <script>
-        document.getElementById('image').onchange = function (evt) {
+        document.getElementById('imageFile').onchange = function (evt) {
             var tgt = evt.target || window.event.srcElement,
                 files = tgt.files;
 
@@ -105,7 +123,7 @@
             if (FileReader && files && files.length) {
                 var fr = new FileReader();
                 fr.onload = function () {
-                    document.getElementById("outImage").src = fr.result;
+                    document.getElementById("image").src = fr.result;
                 }
                 fr.readAsDataURL(files[0]);
             }

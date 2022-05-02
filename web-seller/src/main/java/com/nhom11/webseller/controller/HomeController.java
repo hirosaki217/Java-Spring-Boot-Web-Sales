@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController{
-
+	
 
     @GetMapping(value = {"/", "/home"})
     public String getHome(){
@@ -17,8 +17,4 @@ public class HomeController{
         return "admin/layout-page-admin";
     }
 
-    @GetMapping("/add")
-    public String addd(){
-        return "admin/add-product";
-    }
 }
