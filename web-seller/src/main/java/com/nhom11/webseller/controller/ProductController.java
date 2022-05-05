@@ -1,5 +1,6 @@
 package com.nhom11.webseller.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nhom11.webseller.dto.ProductOptionRequest;
 import com.nhom11.webseller.dto.ProductRequest;
 import com.nhom11.webseller.model.Manufacturer;
 import com.nhom11.webseller.model.Product;
@@ -56,6 +58,10 @@ public class ProductController {
     @GetMapping("/addForm")
     public String showFormAddProduct(Model model){
     	ProductRequest product = new ProductRequest();
+    	
+    	List<ProductOptionRequest> list = new ArrayList<>();
+    	list.add(new ProductOptionRequest());
+    	product.setOptionRequests(list);
     	model.addAttribute("product", product);
     	
         return "admin/product/add-product";
@@ -85,10 +91,10 @@ public class ProductController {
     	}
     	Product product = new Product();
     	BeanUtils.copyProperties(productRequest, product);
-    	Manufacturer manufacturer = new Manufacturer();
-    	manufacturer.setId(productRequest.getManufacturerId());
-    	product.setManufacturer(manufacturer);
-
+//    	Manufacturer manufacturer = new Manufacturer();
+//    	manufacturer.setId(productRequest.getManufacturerId());
+//    	product.setManufacturer(manufacturer);
+    	System.out.println("SIZE = " + productRequest.getOptionRequests().size());
 //    	if(!productRequest.getImageFile().isEmpty()) {
 //    		UUID uuid = UUID.randomUUID();
 //    		String uuString = uuid.toString();

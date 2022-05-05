@@ -4,6 +4,7 @@ package com.nhom11.webseller.dto;
 
 import java.io.Serializable;
 
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
@@ -14,10 +15,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductOptionRequest implements Serializable{
+	
 	private float price;
 	private String image;
 	private MultipartFile imageFile;
 	private int quantity;
+	
 	private String color;
+	
 	private String sku;
 }

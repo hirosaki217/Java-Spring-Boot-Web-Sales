@@ -38,6 +38,6 @@ public class ProductRequest implements Serializable{
 	private int distanceMax;
 	private long manufacturerId;
 	
-	private List<ProductRequest> productRequests;
+	private List<ProductOptionRequest> optionRequests;
 	
 }

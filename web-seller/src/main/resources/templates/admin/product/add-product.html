@@ -13,7 +13,7 @@
     <div class="app">
 
         <div layout:fragment="content" class="content d-flex justify-content-center">
-            <form action="#" th:action="@{/admin/products}"
+            <form action="#" th:action="@{/admin/products/add}"
                 class="form w-75 mt-5 d-flex flex-column justify-content-center align-items-center" method="post"
                 enctype="multipart/form-data" th:object="${product}">
                 <div class="row justify-content-center">
@@ -115,47 +115,28 @@
                                     </tr>
                                 </thead>
                                 <tbody id="table-body">
-                                    <tr class="table-row" onclick="tableRowHandler(this)">
+                                    <tr th:each="optionRequest, itemStat : *{optionRequests}" class="table-row" onclick="tableRowHandler(this)">
                                         <td>
-                                            <input type="text" class="input-table">
+                                            <input required  oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Màu không được để trống')" th:field="*{optionRequests[__${itemStat.index}__].color}" type="text" class="input-table">
                                         </td>
                                         <td>
-                                            <input type="text" class="input-table">
+                                            <input th:field="*{optionRequests[__${itemStat.index}__].price}" type="number" step="0.1" min="1" class="input-table">
                                         </td>
                                         <td>
-                                            <input type="text" class="input-table">
+                                            <input th:field="*{optionRequests[__${itemStat.index}__].quantity}" type="number"  min="1" class="input-table">
                                         </td>
                                         <td>
-                                            <input type="text" class="input-table">
+                                            <input oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Cần có SKU')" required th:field="*{optionRequests[__${itemStat.index}__].sku}" type="text" class="input-table">
                                         </td>
                                         <td>
-                                            <input type="file" class="imageFile" name="imageFile" id="imageFile">
+                                            <input oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Vui lòng chọn ảnh sản phẩm')" required th:field="*{optionRequests[__${itemStat.index}__].imageFile}" type="file" class="imageFile" name="imageFile" id="imageFile">
                                         </td>
                                         <td>
                                             <button class="btnRemoveRow">X</button>
                                         </td>
                                     </tr>
 
-                                    <tr class="table-row" onclick="tableRowHandler(this)">
-                                        <td>
-                                            <input type="text" class="input-table">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="input-table">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="input-table">
-                                        </td>
-                                        <td>
-                                            <input type="number" class="input-table">
-                                        </td>
-                                        <td>
-                                            <input type="file" class="imageFile" name="imageFile" id="imageFile">
-                                        </td>
-                                        <td>
-                                            <button class="btnRemoveRow">X</button>
-                                        </td>
-                                    </tr>
+                                    
 
                                 </tbody>
 
@@ -192,31 +173,33 @@
         btnAddRow.addEventListener("click", function (e) {
             e.preventDefault();
             var rows = document.querySelectorAll(".table-row");
-
+            console.log(rows.length);
             tableBody.innerHTML = '';
 
             var tr = document.createElement("tr");
 
             tr.classList.add("table-row");
+            var i = rows.length ++;
             tr.innerHTML = `
-            <td>
-                                            <input type="text" class="input-table">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="input-table">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="input-table">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="input-table">
-                                        </td>
-                                        <td>
-                                            <input type="file" class="imageFile" name="imageFile" id="imageFile">
-                                        </td>
-                                        <td>
-                                            <button class="btnRemoveRow">X</button>
-                                        </td>
+                <td>
+                    <input required  oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Màu không được để trống')" id="optionRequests${i}.color" name="optionRequests[${i}].color" type="text" class="input-table">
+                </td>
+                <td>
+                    <input name="optionRequests[${i}].price" type="number" step="0.1" min="1" class="input-table">
+                </td>
+                <td>
+                    <input name="optionRequests[${i}].quantity"  type="number"  min="1" class="input-table">
+                </td>
+                <td>
+                    <input required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Cần có SKU')" name="optionRequests[${i}].sku" type="text" class="input-table">
+                    
+                </td>
+                <td>
+                    <input oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Vui lòng chọn ảnh sản phẩm')" required name="optionRequests[${i}].imageFile" type="file" class="imageFile" name="imageFile" id="imageFile">
+                </td>
+                <td>
+                    <button class="btnRemoveRow">X</button>
+                </td>
             `;
             tr.addEventListener("click", function (tr) {
                 var fr = new FileReader();
@@ -245,13 +228,14 @@
 
         function removeRowHandler() {
             var btnRemoveRows = document.querySelectorAll(".btnRemoveRow");
-            btnRemoveRows.forEach(element => {
-                element.addEventListener("click", function (e) {
-                    e.preventDefault();
-                    if(e.target.parentElement.parentElement.tagName === 'TR')
-                        tableBody.removeChild(e.target.parentElement.parentElement)
+            if(btnRemoveRows.length != 1)
+                btnRemoveRows.forEach(element => {
+                    element.addEventListener("click", function (e) {
+                        e.preventDefault();
+                        if(e.target.parentElement.parentElement.tagName === 'TR')
+                            tableBody.removeChild(e.target.parentElement.parentElement)
+                    });
                 });
-            });
         }
         removeRowHandler();
 
