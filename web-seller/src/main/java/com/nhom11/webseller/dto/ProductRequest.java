@@ -1,6 +1,7 @@
 package com.nhom11.webseller.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -35,10 +36,8 @@ public class ProductRequest implements Serializable{
 	private int maximumChargingTime;
 	private int distanceMin;
 	private int distanceMax;
-	private float price;
-	private String image;
-	private MultipartFile imageFile;
-	private int quantity;
 	private long manufacturerId;
+	
+	private List<ProductRequest> productRequests;
 	
 }

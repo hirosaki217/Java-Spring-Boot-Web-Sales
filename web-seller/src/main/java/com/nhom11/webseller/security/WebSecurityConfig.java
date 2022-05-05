@@ -1,5 +1,8 @@
 package com.nhom11.webseller.security;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 // import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -26,28 +29,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // .build());
     // return manager;
     // }
-
+	
+	@Autowired
+	DataSource dataSource;
+	
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        UserBuilder user = User.withDefaultPasswordEncoder();
-        auth.inMemoryAuthentication()
-                .withUser("hieu").password("{noop}12345").roles("ADMIN");
+//        UserBuilder user = User.withDefaultPasswordEncoder();
+        auth.jdbcAuthentication().dataSource(dataSource);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/", "/home","/admin").permitAll();
-                // .anyRequest().authenticated()
-                // .and()
-                // .formLogin()
-                // .defaultSuccessUrl("/hello")
-                // .permitAll()
-                // .and()
-                // .logout()
-                // .permitAll();
+//                 .anyRequest().authenticated()
+//                 .and()
+//                 .formLogin()
+//                 .defaultSuccessUrl("/hello")
+//                 .permitAll()
+//                 .and()
+//                 .logout()
+//                 .permitAll();
         http.headers().frameOptions().sameOrigin();
     }
 }

@@ -53,11 +53,6 @@ public class Product {
 	private int distanceMin;
 	@Column(name = "distance_max")
 	private int distanceMax;
-	private float price;
-	
-	@Column(columnDefinition = "nvarchar(255)", nullable = false)
-	private String image;
-	private int quantity;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "manufacturer_id")
@@ -65,16 +60,24 @@ public class Product {
 	@ToString.Exclude
 	private Manufacturer manufacturer;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "catergory_id")
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	private Catergory catergory;
+	
 	
 	@OneToMany(mappedBy = "product", cascade =CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private List<ProductTag> productTags;
 	
+	
+	
 	@OneToMany(mappedBy = "product", cascade =CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	private List<Color> colors;
+	private List<ProductOption> productOptions;
 	
 	@OneToMany(mappedBy = "product", cascade =CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
