@@ -54,13 +54,13 @@ public class Product {
 	@Column(name = "distance_max")
 	private int distanceMax;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "manufacturer_id")
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private Manufacturer manufacturer;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade =  CascadeType.ALL)
 	@JoinColumn(name = "catergory_id")
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
@@ -74,7 +74,7 @@ public class Product {
 	
 	
 	
-	@OneToMany(mappedBy = "product", cascade =CascadeType.ALL)
+	@OneToMany(mappedBy = "product", orphanRemoval = true, cascade =CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private List<ProductOption> productOptions;

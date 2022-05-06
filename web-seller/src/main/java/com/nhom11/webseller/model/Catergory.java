@@ -27,7 +27,7 @@ public class Catergory {
 	private long id;
 	private String name;
 	
-	@OneToMany(mappedBy = "catergory", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "catergory", orphanRemoval = true, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private List<Product> product;

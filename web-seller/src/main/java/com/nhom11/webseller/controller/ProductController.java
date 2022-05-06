@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -110,6 +111,8 @@ public class ProductController {
 			System.out.println(bindingResult.hasErrors());
 			return new ModelAndView("admin/product/add-product");
 		}
+		
+		
 		Product product = new Product();
 		List<ProductOption> options = new ArrayList<>();
 		BeanUtils.copyProperties(productRequest, product);
@@ -124,8 +127,17 @@ public class ProductController {
 		catergory.setId(productRequest.getCatergoryId());
 		product.setCatergory(catergory);
 
-		// copy from dto
+		// remove null
 		List<ProductOptionRequest> optionRequests = productRequest.getOptionRequests();
+		for (int i = 0; i < optionRequests.size(); i++) {
+			ProductOptionRequest o = optionRequests.get(i);
+			if(o.getColor() == null|| o.getSku() == null || o.getImageFile() == null ) {
+				optionRequests.remove(i);
+				i =0;
+			}
+				
+		}
+		// copy from dto
 		for (ProductOptionRequest optionRequest : optionRequests) {
 			ProductOption pOption = new ProductOption();
 			BeanUtils.copyProperties(optionRequest, pOption);
@@ -148,13 +160,13 @@ public class ProductController {
 		product.setProductOptions(options);
 
 		Product p = productService.save(product);
-		productService.flush();
+		
 		List<ProductOption> list = p.getProductOptions();
 		long productId = p.getId();
 		for (int i = 0; i < list.size(); i++) {
 
 			pOptionService.updateProductId(productId, list.get(i).getId());
-			pOptionService.flush();
+			
 
 		}
 
