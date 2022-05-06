@@ -38,5 +38,7 @@ public interface ProductService {
 
 	<S extends Product> S save(S entity);
 
+	void flush();
+
 	
 }

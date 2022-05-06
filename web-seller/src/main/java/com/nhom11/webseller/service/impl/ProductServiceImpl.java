@@ -9,15 +9,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nhom11.webseller.dao.ProductRepository;
 import com.nhom11.webseller.model.Product;
 import com.nhom11.webseller.service.ProductService;
 
 @Service
+@Transactional
 public class ProductServiceImpl implements ProductService{
 	@Autowired
 	private ProductRepository productRepository;
+
+	@Override
+	public void flush() {
+		productRepository.flush();
+	}
 
 	@Override
 	public <S extends Product> S save(S entity) {

@@ -11,19 +11,21 @@
 
 <body>
     <div class="app">
-
         <div layout:fragment="content" class="content d-flex justify-content-center">
             <form action="#" th:action="@{/admin/products/add}"
                 class="form w-75 mt-5 d-flex flex-column justify-content-center align-items-center" method="post"
                 enctype="multipart/form-data" th:object="${product}">
                 <div class="row justify-content-center">
                     <div class="col col-8 overflow-hidden">
+                        <div>
+                            <i class="alert-error text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                            </i>
+                        </div>
                         <div class="input-group mb-2">
                             <span class="input-group-text">Tên xe</span>
                             <input class="form-control" type="text" placeholder="Tên xe" name="name" id="name"
                                 th:field="*{name}">
-                            <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
-                            </div>
+                            
                         </div>
                         <div class="row mb-2">
                             <div class="input-group col">
@@ -95,10 +97,23 @@
                                 <input class="form-control" type="number" name="" id="" th:field="*{distanceMax}">
                             </div>
                         </div>
+
+                        <div class="alert-error  text-danger" th:if="${#fields.hasErrors('manufacturerId')}"
+                            th:errors="*{manufacturerId}">
+                        </div>
                         <select class="form-select mb-2" th:field="*{manufacturerId}">
                             <option value="0" selected>Nhà sản xuất</option>
                             <option th:if="${manufacturers}" th:each="manufacturer : ${manufacturers}"
                                 th:value="${manufacturer.id}" th:text="${manufacturer.name}"></option>
+                        </select>
+
+                        <div class="alert-error  text-danger" th:if="${#fields.hasErrors('catergoryId')}"
+                            th:errors="*{catergoryId}">
+                        </div>
+                        <select class="form-select mb-2" th:field="*{catergoryId}">
+                            <option value="0" selected>Loại</option>
+                            <option th:if="${catergories}" th:each="catergory : ${catergories}"
+                                th:value="${catergory.id}" th:text="${catergory.name}"></option>
                         </select>
 
                         <div>
@@ -115,28 +130,40 @@
                                     </tr>
                                 </thead>
                                 <tbody id="table-body">
-                                    <tr th:each="optionRequest, itemStat : *{optionRequests}" class="table-row" onclick="tableRowHandler(this)">
+                                    <tr th:each="optionRequest, itemStat : *{optionRequests}" class="table-row"
+                                        onclick="tableRowHandler(this)">
                                         <td>
-                                            <input required  oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Màu không được để trống')" th:field="*{optionRequests[__${itemStat.index}__].color}" type="text" class="input-table">
+                                            <input required oninput="setCustomValidity('')"
+                                                oninvalid="this.setCustomValidity('Màu không được để trống')"
+                                                th:field="*{optionRequests[__${itemStat.index}__].color}" type="text"
+                                                class="input-table">
                                         </td>
                                         <td>
-                                            <input th:field="*{optionRequests[__${itemStat.index}__].price}" type="number" step="0.1" min="1" class="input-table">
+                                            <input th:field="*{optionRequests[__${itemStat.index}__].price}"
+                                                type="number" step="0.1" min="1" class="input-table">
                                         </td>
                                         <td>
-                                            <input th:field="*{optionRequests[__${itemStat.index}__].quantity}" type="number"  min="1" class="input-table">
+                                            <input th:field="*{optionRequests[__${itemStat.index}__].quantity}"
+                                                type="number" min="1" class="input-table">
                                         </td>
                                         <td>
-                                            <input oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Cần có SKU')" required th:field="*{optionRequests[__${itemStat.index}__].sku}" type="text" class="input-table">
+                                            <input oninput="setCustomValidity('')"
+                                                oninvalid="this.setCustomValidity('Cần có SKU')" required
+                                                th:field="*{optionRequests[__${itemStat.index}__].sku}" type="text"
+                                                class="input-table">
                                         </td>
                                         <td>
-                                            <input oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Vui lòng chọn ảnh sản phẩm')" required th:field="*{optionRequests[__${itemStat.index}__].imageFile}" type="file" class="imageFile" name="imageFile" id="imageFile">
+                                            <input oninput="setCustomValidity('')"
+                                                oninvalid="this.setCustomValidity('Vui lòng chọn ảnh sản phẩm')"
+                                                required th:field="*{optionRequests[__${itemStat.index}__].imageFile}"
+                                                type="file" class="imageFile" name="imageFile" id="imageFile">
                                         </td>
                                         <td>
                                             <button class="btnRemoveRow">X</button>
                                         </td>
                                     </tr>
 
-                                    
+
 
                                 </tbody>
 
@@ -179,7 +206,7 @@
             var tr = document.createElement("tr");
 
             tr.classList.add("table-row");
-            var i = rows.length ++;
+            var i = rows.length++;
             tr.innerHTML = `
                 <td>
                     <input required  oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Màu không được để trống')" id="optionRequests${i}.color" name="optionRequests[${i}].color" type="text" class="input-table">
@@ -211,8 +238,8 @@
                     parentElement = parentElement.parentElement;
 
                 var file = parentElement.querySelector(".imageFile").files[0];
-                if(file)
-                fr.readAsDataURL(file);
+                if (file)
+                    fr.readAsDataURL(file);
             });
 
             console.log(tr);
@@ -228,11 +255,11 @@
 
         function removeRowHandler() {
             var btnRemoveRows = document.querySelectorAll(".btnRemoveRow");
-            if(btnRemoveRows.length != 1)
+            if (btnRemoveRows.length != 1)
                 btnRemoveRows.forEach(element => {
                     element.addEventListener("click", function (e) {
                         e.preventDefault();
-                        if(e.target.parentElement.parentElement.tagName === 'TR')
+                        if (e.target.parentElement.parentElement.tagName === 'TR')
                             tableBody.removeChild(e.target.parentElement.parentElement)
                     });
                 });

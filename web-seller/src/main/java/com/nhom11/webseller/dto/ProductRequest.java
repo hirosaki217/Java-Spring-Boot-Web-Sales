@@ -19,8 +19,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductRequest implements Serializable{
 
-	@NotEmpty
-	@Size(min = 4)
+	@NotEmpty(message = "tên không được để trống")
+	@Size(min = 4, message = "dài hơn hoặc bằng 4 ký tự")
 	private String name;
 	
 	
@@ -36,8 +36,12 @@ public class ProductRequest implements Serializable{
 	private int maximumChargingTime;
 	private int distanceMin;
 	private int distanceMax;
+	
+	@Min(value = 1, message = "Vui lòng chọn nhà sản xuất ")
 	private long manufacturerId;
 	
+	@Min(value = 1, message = "Vui lòng chọn phân loại sản phẩm ")
+	private long catergoryId;
 	private List<ProductOptionRequest> optionRequests;
 	
 }
