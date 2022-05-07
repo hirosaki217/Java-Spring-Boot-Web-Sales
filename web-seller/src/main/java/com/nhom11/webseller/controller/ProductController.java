@@ -1,5 +1,6 @@
 package com.nhom11.webseller.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,6 +42,8 @@ import com.nhom11.webseller.service.ManufacturerService;
 import com.nhom11.webseller.service.ProductOptionService;
 import com.nhom11.webseller.service.ProductService;
 import com.nhom11.webseller.service.StorageService;
+
+import groovyjarjarpicocli.CommandLine.Parameters;
 
 @Controller
 @RequestMapping("admin/products")
@@ -79,13 +84,47 @@ public class ProductController {
 	@GetMapping("/addForm")
 	public String showFormAddProduct(Model model) {
 		ProductRequest product = new ProductRequest();
-
+		product.setEdit(false);
 		List<ProductOptionRequest> list = new ArrayList<>();
 		list.add(new ProductOptionRequest());
 		product.setOptionRequests(list);
 		model.addAttribute("product", product);
 
 		return "admin/product/add-product";
+	}
+
+	@GetMapping("/edit/{id}")
+	public ModelAndView showFormEdit(ModelMap model, @PathVariable long id) {
+		Optional<Product> productO = productService.findById(id);
+		Product product = productO.get();
+		ProductRequest productRequest = new ProductRequest();
+		BeanUtils.copyProperties(product, productRequest);
+
+		productRequest.setEdit(true);
+		List<ProductOption> productOptions = product.getProductOptions();
+		List<ProductOptionRequest> list = new ArrayList<>();
+		for (ProductOption productOption : productOptions) {
+			ProductOptionRequest optionRequest = new ProductOptionRequest();
+			BeanUtils.copyProperties(productOption, optionRequest);
+			optionRequest.setProductId(productOption.getProduct().getId());
+
+			list.add(optionRequest);
+		}
+		
+		productRequest.setOptionRequests(list);
+		model.addAttribute("product", productRequest);
+		return new ModelAndView("/admin/product/add-product", model);
+	}
+
+	@GetMapping("/delete/{id}")
+	public String deleteProduct(@PathVariable long id) {
+		Product p = new Product();
+		p.setId(id);
+
+		pOptionService.deleteProductOptionByProductID(id);
+		productService.delete(p);
+
+		return "redirect:/admin/products";
 	}
 
 	@GetMapping("/images/{filename:.+}")
@@ -104,15 +143,22 @@ public class ProductController {
 	}
 
 	@PostMapping("/add")
-	public ModelAndView addProduct(@ModelAttribute(name = "product") ProductRequest productRequest,
+	public ModelAndView addProduct(ModelMap model, @ModelAttribute(name = "product") ProductRequest productRequest,
 			BindingResult bindingResult) {
 
+		long prId = productRequest.getId();
+		if (productRequest.getManufacturerId() == 0)
+			bindingResult.rejectValue("manufacturerId", "error.productRequest", "bạn cần chọn nhà sản xuất");
+		if (productRequest.getCatergoryId() == 0)
+			bindingResult.rejectValue("catergoryId", "error.productRequest", "bạn cần chọn loại sản phẩm");
 		if (bindingResult.hasErrors()) {
-			System.out.println(bindingResult.hasErrors());
-			return new ModelAndView("admin/product/add-product");
+			if (prId > 0) {
+				productRequest.setEdit(true);
+				model.addAttribute("product", productRequest);
+			}
+			return new ModelAndView("/admin/product/add-product", model);
 		}
-		
-		
+
 		Product product = new Product();
 		List<ProductOption> options = new ArrayList<>();
 		BeanUtils.copyProperties(productRequest, product);
@@ -131,11 +177,11 @@ public class ProductController {
 		List<ProductOptionRequest> optionRequests = productRequest.getOptionRequests();
 		for (int i = 0; i < optionRequests.size(); i++) {
 			ProductOptionRequest o = optionRequests.get(i);
-			if(o.getColor() == null|| o.getSku() == null || o.getImageFile() == null ) {
+			if (o.getColor() == null || o.getSku() == null || o.getImageFile() == null) {
 				optionRequests.remove(i);
-				i =0;
+				i = 0;
 			}
-				
+
 		}
 		// copy from dto
 		for (ProductOptionRequest optionRequest : optionRequests) {
@@ -157,17 +203,18 @@ public class ProductController {
 		}
 
 		// set product option into product
-		product.setProductOptions(options);
-
+//		product.setProductOptions(options);
 		Product p = productService.save(product);
-		
-		List<ProductOption> list = p.getProductOptions();
+
 		long productId = p.getId();
-		for (int i = 0; i < list.size(); i++) {
-
-			pOptionService.updateProductId(productId, list.get(i).getId());
+		pOptionService.deleteProductOptionByProductID(productId);
+		for(int i=0;i< options.size(); i++) {
+			Product p1 = new Product();
+			p1.setId(productId);
+			ProductOption option = options.get(i);
 			
-
+			option.setProduct(p1);
+			pOptionService.save(option);
 		}
 
 		return new ModelAndView("redirect:/admin/products");

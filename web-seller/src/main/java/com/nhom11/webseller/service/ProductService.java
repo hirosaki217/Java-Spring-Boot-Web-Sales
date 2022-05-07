@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.nhom11.webseller.dao.ProductRepository;
+import com.nhom11.webseller.dto.ProductRequest;
 import com.nhom11.webseller.model.Product;
 
 
@@ -36,9 +37,12 @@ public interface ProductService {
 
 	List<Product> findAll();
 
-	<S extends Product> S save(S entity);
+
 
 	void flush();
+
+
+	<S extends Product> S save(S entity);
 
 	
 }

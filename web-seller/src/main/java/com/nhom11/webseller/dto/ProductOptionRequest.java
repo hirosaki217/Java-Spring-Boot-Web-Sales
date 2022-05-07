@@ -15,13 +15,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductOptionRequest implements Serializable{
-	
+	private long id;
 	private float price;
 	private String image;
 	private MultipartFile imageFile;
 	private int quantity;
 	
 	private String color;
-	
+	private long productId;
 	private String sku;
 }

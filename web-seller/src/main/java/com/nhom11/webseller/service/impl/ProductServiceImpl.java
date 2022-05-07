@@ -1,5 +1,6 @@
 package com.nhom11.webseller.service.impl;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nhom11.webseller.dao.ProductRepository;
+import com.nhom11.webseller.dto.ProductRequest;
 import com.nhom11.webseller.model.Product;
+import com.nhom11.webseller.model.ProductOption;
+import com.nhom11.webseller.service.ProductOptionService;
 import com.nhom11.webseller.service.ProductService;
 
 @Service
@@ -20,7 +24,11 @@ import com.nhom11.webseller.service.ProductService;
 public class ProductServiceImpl implements ProductService{
 	@Autowired
 	private ProductRepository productRepository;
-
+	
+	@Autowired
+	private ProductOptionService optionService;
+	
+	
 	@Override
 	public void flush() {
 		productRepository.flush();
@@ -68,6 +76,7 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public void delete(Product entity) {
+		optionService.deleteProductOptionByProductID(entity.getId());
 		productRepository.delete(entity);
 	}
 
@@ -80,5 +89,7 @@ public class ProductServiceImpl implements ProductService{
 	public <S extends Product> List<S> findAll(Example<S> example, Sort sort) {
 		return productRepository.findAll(example, sort);
 	}
+
+
 	
 }

@@ -45,22 +45,18 @@ public class Product {
 	private int maximumMaximumSpeed;
 	private int battery;
 	private int weight;
-	@Column(name = "minimum_charging_time")
-	private int minimumChargingTime;
-	@Column(name = "maximum_charging_time")
-	private int maximumChargingTime;
 	@Column(name = "distance_min")
 	private int distanceMin;
 	@Column(name = "distance_max")
 	private int distanceMax;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "manufacturer_id")
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private Manufacturer manufacturer;
 	
-	@ManyToOne(cascade =  CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "catergory_id")
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
@@ -74,7 +70,7 @@ public class Product {
 	
 	
 	
-	@OneToMany(mappedBy = "product", orphanRemoval = true, cascade =CascadeType.ALL)
+	@OneToMany(mappedBy = "product", cascade =CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private List<ProductOption> productOptions;

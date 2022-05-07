@@ -17,6 +17,12 @@
                 enctype="multipart/form-data" th:object="${product}">
                 <div class="row justify-content-center">
                     <div class="col col-8 overflow-hidden">
+                        <input type="hidden" th:field="*{isEdit}">
+                        <div th:if="${product.isEdit}" class="input-group mb-2">
+                            <span class="input-group-text">Mã sản phẩm</span>
+                            <input class="form-control" readonly type="number" th:field="*{id}"  >
+                        </div>
+                        
                         <div>
                             <i class="alert-error text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
                             </i>
@@ -55,21 +61,6 @@
                         <div class="input-group mb-2">
                             <span class="input-group-text">Acquy</span>
                             <input class="form-control" type="number" name="" id="" th:field="*{battery}">
-                        </div>
-                        <div class="row mb-2">
-                            <div class="input-group col">
-                                <span class="input-group-text">Thời gian sạc: </span>
-                            </div>
-                            <div class="input-group col">
-                                <span class="input-group-text">từ </span>
-                                <input class="form-control" type="number" name="thoiGianSacMin" id="thoiGianSacMin"
-                                    th:field="*{minimumChargingTime}">
-                            </div>
-                            <div class="input-group col">
-                                <span class="input-group-text">đến</span>
-                                <input class="form-control" type="number" name="thoiGianSacMax" id="thoiGianSacMax"
-                                    th:field="*{maximumChargingTime}">
-                            </div>
                         </div>
                         <div class="row mb-2">
                             <div class="input-group col">
@@ -117,7 +108,7 @@
                         </select>
 
                         <div>
-                            <button id="addRow">+</button>
+                            
                             <table class="table table-bordered ">
                                 <thead>
                                     <tr>
@@ -159,7 +150,7 @@
                                                 type="file" class="imageFile" name="imageFile" id="imageFile">
                                         </td>
                                         <td>
-                                            <button class="btnRemoveRow">X</button>
+                                            <button class="btnRemoveRow btn btn-danger"><i class="bi bi-trash"></i></button>
                                         </td>
                                     </tr>
 
@@ -168,6 +159,7 @@
                                 </tbody>
 
                             </table>
+                            <button id="addRow" class="btn btn-success"><i class="bi bi-plus-square-fill"></i> Thêm tùy chọn sản phẩm</button>
                         </div>
 
                     </div>
@@ -180,7 +172,7 @@
                 </div>
 
                 <div class="w-50 align-self-center">
-                    <button type="submit" class="btn btn-primary w-100">Save</button>
+                    <button type="submit" class="btn btn-primary w-100" th:text="${product.isEdit ? 'Cập nhật' : 'Lưu'}"></button>
                 </div>
             </form>
         </div>
@@ -225,10 +217,11 @@
                     <input oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Vui lòng chọn ảnh sản phẩm')" required name="optionRequests[${i}].imageFile" type="file" class="imageFile" name="imageFile" id="imageFile">
                 </td>
                 <td>
-                    <button class="btnRemoveRow">X</button>
+                    <button class="btnRemoveRow btn btn-danger"><i class="bi bi-trash"></i></button>
                 </td>
             `;
             tr.addEventListener("click", function (tr) {
+                
                 var fr = new FileReader();
                 fr.onload = function () {
                     document.getElementById("image").src = fr.result;
@@ -236,14 +229,15 @@
                 var parentElement = tr.target.parentElement;
                 if (parentElement.tagName === 'TD')
                     parentElement = parentElement.parentElement;
-
-                var file = parentElement.querySelector(".imageFile").files[0];
+                var fileElelement = parentElement.querySelector(".imageFile");
+                if(fileElelement)
+                    var file = fileElelement.files[0];
                 if (file)
                     fr.readAsDataURL(file);
             });
 
             console.log(tr);
-            rows = [...rows, tr]
+            rows = [...rows, tr];
             loadList(tableBody, rows);
 
             removeRowHandler();
@@ -255,19 +249,22 @@
 
         function removeRowHandler() {
             var btnRemoveRows = document.querySelectorAll(".btnRemoveRow");
-            if (btnRemoveRows.length != 1)
+                
                 btnRemoveRows.forEach(element => {
                     element.addEventListener("click", function (e) {
                         e.preventDefault();
-                        if (e.target.parentElement.parentElement.tagName === 'TR')
-                            tableBody.removeChild(e.target.parentElement.parentElement)
+                        var totalRow = document.querySelectorAll(".btnRemoveRow").length;
+                        if (totalRow> 1){
+                            if (element.parentElement.parentElement.tagName === 'TR'){
+                                tableBody.removeChild(element.parentElement.parentElement)
+                            }
+                        }
                     });
                 });
         }
         removeRowHandler();
 
         var tableRowHandler = function (e) {
-
             var fr = new FileReader();
             fr.onload = function () {
                 document.getElementById("image").src = fr.result;
