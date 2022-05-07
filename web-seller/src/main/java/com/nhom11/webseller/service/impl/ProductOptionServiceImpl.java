@@ -23,15 +23,7 @@ public class ProductOptionServiceImpl implements ProductOptionService{
 	
 	@Override
 	public int deleteProductOptionByProductID(long pId) {
-		List<ProductOption> productOptions = findProductOptionsByProductId(pId);
-		for(int i =0; i< productOptions.size(); i++) {
-			try {
-				storageService.delete(productOptions.get(i).getImage());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+
 		return optionRepository.deleteProductOptionByProductID(pId);
 	}
 	

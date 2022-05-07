@@ -1,5 +1,6 @@
 package com.nhom11.webseller.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -147,6 +148,8 @@ public class ProductController {
 			bindingResult.rejectValue("manufacturerId", "error.productRequest", "bạn cần chọn nhà sản xuất");
 		if (productRequest.getCatergoryId() == 0)
 			bindingResult.rejectValue("catergoryId", "error.productRequest", "bạn cần chọn loại sản phẩm");
+		
+		
 		if (bindingResult.hasErrors()) {
 			if (prId > 0) {
 				productRequest.setEdit(true);
@@ -190,16 +193,31 @@ public class ProductController {
 		for (int i = 0; i < optionRequests.size(); i++) {
 			ProductOptionRequest optionRequest = optionRequests.get(i);
 			if (!optionRequest.getImageFile().isEmpty()) {
-				UUID uuid = UUID.randomUUID();
-				String uuString = uuid.toString();
+				
 				ProductOption option = options.get(i);
-				option.setImage(storageService.getStoredFilename(optionRequest.getImageFile(), uuString));
-				storageService.store(optionRequest.getImageFile(), option.getImage());
+				if(optionRequest.getImageFile().isEmpty() && optionRequest.getImage() != null && productRequest.getIsEdit()) {
+					option.setImage(optionRequest.getImage());
+				}
+				else if(
+						((!optionRequest.getImageFile().isEmpty()) && optionRequest.getImage() != null) || 
+						(!optionRequest.getImageFile().isEmpty()) && optionRequest.getImage() == null)	{
+					UUID uuid = UUID.randomUUID();
+					String uuString = uuid.toString();
+					try {
+						if(optionRequest.getImage() != null)
+							storageService.delete(optionRequest.getImage());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+					}
+					option.setImage(storageService.getStoredFilename(optionRequest.getImageFile(), uuString));
+					storageService.store(optionRequest.getImageFile(), option.getImage());
+					
+				}
+				
 			}
 		}
 
 		// set product option into product
-//		product.setProductOptions(options);
 		Product p = productService.save(product);
 
 		long productId = p.getId();
@@ -210,6 +228,7 @@ public class ProductController {
 			ProductOption option = options.get(i);
 			
 			option.setProduct(p1);
+			
 			pOptionService.save(option);
 		}
 
