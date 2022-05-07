@@ -124,7 +124,7 @@ public class ProductController {
 
 	@GetMapping("/images/{filename:.+}")
 	@ResponseBody
-	public ResponseEntity<Resource> transferFile(String fileName) {
+	public ResponseEntity<Resource> transferFile(@PathVariable(name = "filename") String fileName) {
 		Resource file = storageService.loadAsResoure(fileName);
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
