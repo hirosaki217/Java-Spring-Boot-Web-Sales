@@ -1,0 +1,12 @@
+.table>tfoot>tr>td {
+    vertical-align: middle;
+    text-align: right;
+    border: 1px #E8E8E8 solid;
+
+}
+.table>tbody>tr>td {
+    vertical-align: middle;
+}
+
+
+

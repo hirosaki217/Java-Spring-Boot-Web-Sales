@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:xmlns="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/layout-page-admin}">
+
+</html>
+
+<head>
+    <title>add-product</title>
+
+</head>
+
+<body>
+    <div class="app">
+        <div layout:fragment="content" class="content d-flex justify-content-center">
+            <form action="#" th:action="@{/admin/products/add}"
+                class="form w-75 mt-5 d-flex flex-column justify-content-center align-items-center" method="post"
+                enctype="multipart/form-data" th:object="${product}">
+                <div class="row justify-content-center">
+                    <div class="col col-8">
+                        <input type="hidden" th:field="*{isEdit}">
+                        <div th:if="${product.isEdit}" class="input-group mb-2">
+                            <span class="input-group-text">Mã sản phẩm</span>
+                            <input class="form-control" readonly type="number" th:field="*{id}"  >
+                        </div>
+                        
+                        <div>
+                            <i class="alert-error text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                            </i>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Tên xe</span>
+                            <input class="form-control" type="text" placeholder="Tên xe" name="name" id="name"
+                                th:field="*{name}">
+                            
+                        </div>
+                        <div class="row mb-2">
+                            <div class="input-group col">
+                                <span class="input-group-text">Chiều Dài(mm)</span>
+                                <input class="form-control" type="number" name="chieuDai" id="chieuDai"
+                                    th:field="*{length}">
+                            </div>
+                            <div class="input-group col">
+                                <span class="input-group-text">Chiều rộng(mm)</span>
+                                <input class="form-control" type="number" name="chieuRong" id="chieuRong"
+                                    th:field="*{width}">
+                            </div>
+                            <div class="input-group col">
+                                <span class="input-group-text">Chiều cao(mm)</span>
+                                <input class="form-control" type="number" name="chieuCao" id="chieuCao"
+                                    th:field="*{height}">
+                            </div>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Trọng lượng(kg)</span>
+                            <input class="form-control" type="number" name="" id="" th:field="*{weight}">
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Tải trọng(kg)</span>
+                            <input class="form-control" type="number" name="" id="" th:field="*{maximumLoad}">
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Acquy</span>
+                            <input class="form-control" type="number" name="" id="" th:field="*{battery}">
+                        </div>
+                        <div class="row mb-2">
+                            <div class="input-group col">
+                                <span class="input-group-text">Vận tốc xe (km/h): </span>
+                            </div>
+                            <div class="input-group col">
+                                <span class="input-group-text">từ</span>
+                                <input class="form-control" type="number" name="" id=""
+                                    th:field="*{minimumMaximumSpeed}">
+                            </div>
+                            <div class="input-group col">
+                                <span class="input-group-text">đến</span>
+                                <input class="form-control" type="number" name="" id=""
+                                    th:field="*{maximumMaximumSpeed}">
+                            </div>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Quảng đường đi được (km)</span>
+                            <div class="input-group col">
+                                <span class="input-group-text">từ</span>
+                                <input class="form-control" type="number" name="" id="" th:field="*{distanceMin}">
+                            </div>
+                            <div class="input-group col">
+                                <span class="input-group-text">đến</span>
+                                <input class="form-control" type="number" name="" id="" th:field="*{distanceMax}">
+                            </div>
+                        </div>
+
+                        <div class="alert-error  text-danger" th:if="${#fields.hasErrors('manufacturerId')}"
+                            th:errors="*{manufacturerId}">
+                        </div>
+                        <select class="form-select mb-2" th:field="*{manufacturerId}">
+                            <option value="0" selected>Nhà sản xuất</option>
+                            <option th:if="${manufacturers}" th:each="manufacturer : ${manufacturers}"
+                                th:value="${manufacturer.id}" th:text="${manufacturer.name}"></option>
+                        </select>
+
+                        <div class="alert-error  text-danger" th:if="${#fields.hasErrors('catergoryId')}"
+                            th:errors="*{catergoryId}">
+                        </div>
+                        <select class="form-select mb-2" th:field="*{catergoryId}">
+                            <option value="0" selected>Loại</option>
+                            <option th:if="${catergories}" th:each="catergory : ${catergories}"
+                                th:value="${catergory.id}" th:text="${catergory.name}"></option>
+                        </select>
+
+                        <div>
+                            
+                            <table class="table table-bordered ">
+                                <thead>
+                                    <tr>
+                                        <th class="col">Màu</th>
+                                        <th class="col">Giá</th>
+                                        <th class="col">Số lượng</th>
+                                        <th class="col">SKU</th>
+                                        <th class="col">Ảnh</th>
+                                        <th class="col">Chọn ảnh | Xóa SP</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-body">
+                                    <tr th:each="optionRequest, itemStat : *{optionRequests}" class="table-row"
+                                        onclick="tableRowHandler(this)">
+                                        <td>
+                                            <input required oninput="setCustomValidity('')"
+                                                oninvalid="this.setCustomValidity('Màu không được để trống')"
+                                                th:field="*{optionRequests[__${itemStat.index}__].color}" type="text"
+                                                class="input-table">
+                                        </td>
+                                        <td>
+                                            <input th:field="*{optionRequests[__${itemStat.index}__].price}"
+                                                type="number" value="1" step="0.1" min="1" class="input-table">
+                                        </td>
+                                        <td>
+                                            <input th:field="*{optionRequests[__${itemStat.index}__].quantity}"
+                                                type="number" min="1" value="1" class="input-table">
+                                        </td>
+                                        <td>
+                                            <input oninput="setCustomValidity('')"
+                                                oninvalid="this.setCustomValidity('Cần có SKU')" required
+                                                th:field="*{optionRequests[__${itemStat.index}__].sku}" type="text"
+                                                class="input-table">
+                                        </td>
+                                        <td class="position-relative">
+                                            <input 
+                                                th:field="*{optionRequests[__${itemStat.index}__].image}"  type="text" readonly
+                                                class="input-table show-image-old image-old">
+                                                <div class="position-absolute  image-zoom">
+                                                    <img class="w-100 img-thumbnail"  src="/image/default-image.jpg" alt="">
+                                                </div>
+                                        </td>
+                                        
+                                        <td class="d-flex justify-content-center align-items-center">
+                                            <input oninput="setCustomValidity('')"
+                                                oninvalid="this.setCustomValidity('Vui lòng chọn ảnh sản phẩm')"
+                                                th:field="*{optionRequests[__${itemStat.index}__].imageFile}"
+                                                type="file" class="imageFile me-2" style="width: 100px;" name="imageFile" id="imageFile"> |
+                                            <button class="btnRemoveRow btn btn-danger ms-2"><i class="bi bi-trash"></i></button>
+                                        </td>
+                                    </tr>
+
+
+
+                                </tbody>
+
+                            </table>
+                            <button id="addRow" class="btn btn-success"><i class="bi bi-plus-square-fill"></i> Thêm tùy chọn sản phẩm</button>
+                        </div>
+
+                    </div>
+                    <div class="col col-4 row flex-column align-items-center justify-content-center">
+                        <div class="wrap-image d-flex justify-content-center mb-3">
+                            <img id="image" src="" th:src="@{/image/default-image.jpg}" alt=""
+                                class="rounded product-image w-75">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-50 align-self-center">
+                    <button type="submit" class="btn btn-primary w-100" th:text="${product.isEdit ? 'Cập nhật' : 'Lưu'}"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+
+        var imageHovers = document.querySelectorAll(".show-image-old");
+        var imageZooms = document.querySelectorAll(".image-zoom>img");
+        for(var j = 0; j < imageHovers.length; j++){
+            if(imageHovers[j].value){
+                imageHovers[j].classList.add("image-hover");
+                imageZooms[j].src ="/admin/products/images/"+ imageHovers[j].value;
+            }
+        }
+
+        
+            
+
+        var btnAddRow = document.querySelector("#addRow");
+        var tableBody = document.querySelector("#table-body");
+
+
+        function loadList(nodeRoot, rows) {
+            console.log(rows);
+            rows.forEach(element => {
+                nodeRoot.appendChild(element);
+
+            });
+        }
+
+        btnAddRow.addEventListener("click", function (e) {
+            e.preventDefault();
+            var rows = document.querySelectorAll(".table-row");
+            console.log(rows.length);
+            tableBody.innerHTML = '';
+
+            var tr = document.createElement("tr");
+
+            tr.classList.add("table-row");
+            var i = rows.length++;
+            tr.innerHTML = `
+                <td>
+                    <input required  oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Màu không được để trống')" id="optionRequests${i}.color" name="optionRequests[${i}].color" type="text" class="input-table">
+                </td>
+                <td>
+                    <input name="optionRequests[${i}].price" type="number"  step="0.1" min="1" class="input-table">
+                </td>
+                <td>
+                    <input name="optionRequests[${i}].quantity"  type="number"  min="1" class="input-table">
+                </td>
+                <td>
+                    <input required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Cần có SKU')" name="optionRequests[${i}].sku" type="text" class="input-table">
+                    
+                </td>
+                <td>
+                    <input 
+                        name="optionRequests[${i}].image" type="text" readonly
+                        class="input-table show-image-old image-old">
+                        <div class="position-absolute  image-zoom">
+                                                    <img class="w-100 img-thumbnail"  src="/image/default-image.jpg" alt="">
+                                                </div>
+                </td>
+                                        
+                <td class="d-flex justify-content-center align-items-center">
+                    <input oninput="setCustomValidity('')"
+                        oninvalid="this.setCustomValidity('Vui lòng chọn ảnh sản phẩm')"
+                        required name="optionRequests[${i}].imageFile"
+                        type="file" class="imageFile me-2" style="width: 100px;" name="imageFile" id="imageFile"> |
+                    <button class="btnRemoveRow btn btn-danger ms-2"><i class="bi bi-trash"></i></button>
+                </td>
+            `;
+            tr.addEventListener("click", function (tr) {
+                
+                var fr = new FileReader();
+                fr.onload = function () {
+                    document.getElementById("image").src = fr.result;
+                }
+                var parentElement = tr.target.parentElement;
+                if (parentElement.tagName === 'TD')
+                    parentElement = parentElement.parentElement;
+                var fileElelement = parentElement.querySelector(".imageFile");
+                if(fileElelement)
+                    var file = fileElelement.files[0];
+                if (file)
+                    fr.readAsDataURL(file);
+            });
+
+            console.log(tr);
+            rows = [...rows, tr];
+            loadList(tableBody, rows);
+            addRequiredPickImage();
+            removeRowHandler();
+            eventListBtnImage();
+            console.log(rows);
+        });
+
+        function addRequiredPickImage(){
+            var rows = document.querySelectorAll(".table-row");
+            rows.forEach(element => {
+                var imageOld = element.querySelector(".image-old");
+                var imageFile = element.querySelector(".imageFile");
+                if(!imageOld.value && imageFile.files.length == 0){
+                    element.setAttribute("required", '');
+                }
+            });
+        }
+
+        addRequiredPickImage();
+
+        function removeRowHandler() {
+            var btnRemoveRows = document.querySelectorAll(".btnRemoveRow");
+                
+                btnRemoveRows.forEach(element => {
+                    element.addEventListener("click", function (e) {
+                        e.preventDefault();
+                        var totalRow = document.querySelectorAll(".btnRemoveRow").length;
+                        if (totalRow> 1){
+                            if (element.parentElement.parentElement.tagName === 'TR'){
+                                tableBody.removeChild(element.parentElement.parentElement)
+                            }
+                        }
+                    });
+                });
+        }
+        removeRowHandler();
+
+        var tableRowHandler = function (e) {
+            var fr = new FileReader();
+            fr.onload = function () {
+                document.getElementById("image").src = fr.result;
+            }
+            if (e.querySelector(".imageFile").files[0])
+                fr.readAsDataURL((e.querySelector(".imageFile").files[0]));
+        }
+
+        var eventListBtnImage = function () {
+            var imageButtons = document.querySelectorAll(".imageFile");
+            for (var i = 0; i < imageButtons.length; i++) {
+                imageButtons[i].onchange = function (evt) {
+                    var tgt = evt.target || window.event.srcElement,
+                        files = tgt.files;
+
+                    // FileReader support
+                    if (FileReader && files && files.length) {
+                        var fr = new FileReader();
+
+                        fr.onload = function () {
+                            document.getElementById("image").src = fr.result;
+                        }
+                        fr.readAsDataURL(files[0]);
+                    }
+                }
+            }
+        }
+
+        eventListBtnImage();
+    </script>
+</body>
+
+</html>

@@ -35,7 +35,7 @@ public class ProductRequest implements Serializable{
 	private int distanceMin;
 	private int distanceMax;
 	
-
+	private float price;
 	private long manufacturerId;
 
 	private long catergoryId;

@@ -10,14 +10,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.nhom11.webseller.dao.ProductRepository;
 import com.nhom11.webseller.dto.ProductRequest;
 import com.nhom11.webseller.model.Product;
+import com.nhom11.webseller.repository.ProductRepository;
 
 
 public interface ProductService {
 
 	<S extends Product> List<S> findAll(Example<S> example, Sort sort);
+
+	List<Product> findByNameContaining(String name);
+
+	Page<Product> findByNameContaining(String name, Pageable pageable);
+
+	Page<Product> findProducts(Pageable pageable);
 
 	void deleteAll();
 
@@ -43,6 +49,8 @@ public interface ProductService {
 
 
 	<S extends Product> S save(S entity);
+
+	Page<Product> findByCatergoryId(long catergoryId, Pageable pageable);
 
 	
 }

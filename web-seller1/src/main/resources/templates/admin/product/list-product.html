@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:xmlns="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/layout-page-admin}">
+
+</html>
+
+<head>
+    <title>list-product</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <div layout:fragment="content">
+            <div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Tên xe</th>
+                            <th>Acquy</th>
+                            <th>Phân Loại</th>
+                            <th>Nhà sản xuất</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="item : ${products}">
+                            <td th:text="${item.name}">
+                                ABC
+                            </td>
+                            <td th:text="${item.battery}">
+                                15kmA
+                            </td>
+                            <td th:text="${item.catergory.name}">
+                                OSAKAR
+                            </td>
+                            <td th:text="${item.manufacturer.name}">
+                                JAPAN
+                            </td>
+                            <td>
+                                <a id="btnDelete" th:href="@{'/admin/products/delete/' + ${item.id}}"><i class="bi bi-trash text-danger text-center"></i></a> |
+                                <a  th:href="@{'/admin/products/edit/' + ${item.id}}"><i class="bi text-success bi-pencil-square text-center"></i></i></a>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        var btnDelete = document.querySelector("#btnDelete");
+        btnDelete.addEventListener("click", (e)=>{
+            e.preventDefault();
+            
+            var rs = confirm("xóa sản phẩm này ?");
+            var element = e.target;
+            console.log(e.target);
+            if(e.target.tagName == 'I')
+                element = element.parentElement;
+            
+            if(rs)
+                window.location.href=element.href;
+        });
+    </script>
+</body>
+
+</html>

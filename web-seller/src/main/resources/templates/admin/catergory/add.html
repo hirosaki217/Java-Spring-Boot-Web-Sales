@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{admin/layout-page-admin}"
+>
+    <head>
+        <title>Trang chủ</title>
+        
+    </head>
+
+    <body>
+        <div layout:fragment="content">
+            
+            <main class="container">
+                <section class="row">
+                    <div class="col-6 offset-3 mt-4">
+                        <form method="post" th:action="@{/admin/catergorys/saveOrUpdate}" th:object="${catergory}">
+                            
+                            <div class="card">
+                                <div th:if="${catergory.isEdit}" class="card-header">
+                                    <h2>Update Catergory</h2>
+                                </div>
+                                <div th:unless="${catergory.isEdit}" class="card-header">
+                                    <h2>Add Catergory</h2>
+                                </div>
+                                <div class="card-body"></div>
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input type="hidden" th:field="*{id}">
+                                        <input type="text" class="form-control"  th:field="*{name}"id="name"
+                                        placeholder="Catergory Name">
+                                  
+                                    </div>
+                            </div>
+                            <div class="card-footer text-muted">
+                                <div class="card-body">
+                                    <a th:href="@{/admin/catergorys}" class="btn btn-success">List Catergorys</a>
+                                    <Button class="btn btn-primary">
+                                        
+                                    <span th:if="${catergory.isEdit}">Update</span>
+                                    <span th:unless="${catergory.isEdit}">Save</span>
+                                    </Button>
+                                </div>
+                            </div>
+                        </form>
+        
+                    </div>
+                </section>
+            </main>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/main}">
+
+<head>
+    <title>Sản phẩm</title>
+    <link rel="stylesheet" href="css/sanphamprice.css">
+    <!-- <link rel="stylesheet" href="css/price.css"> -->
+    <link rel="stylesheet" href="css/sanpham.css">
+
+
+</head>
+
+<body>
+
+    <div layout:fragment="content">
+
+        <div class="abc bg-black d-flex align-items-baseline" style="padding:10px 0">
+
+            <a href="" style="color:white; padding: 0 10px ; text-decoration: none;">Home</a>
+            <span style="color:white">></span>
+            <a style="color:white;padding-left: 10px; text-decoration: none;">Sản phẩm</a>
+        </div>
+
+
+
+        <div class="wrapper d-flex justify-content-center align-items-center">
+
+            <div class="container row w-100">
+                <div class="container__left col-md-3 bg-light">
+                    <div class="sort__price row d-flex justify-content-center align-items-center">
+                        <div class="left__price-title col-md-11" style="padding-top:10px;">
+                            <h5>LỌC THEO GIÁ</h5>
+
+                        </div>
+                        <div class="left__price-range col-md-11 bg-light">
+                            <div class="min-value numberVal">
+                                <input type="number" min="0" max="30000000" value="7500000" disabled>
+
+                            </div>
+
+                            <div class="range-slider">
+                                <div class="progress"></div>
+                                <input type="range" class="range-min" min="0" max="30000000" value="7500000">
+                                <input type="range" class="range-max" min="0" max="30000000" value="22500000">
+                            </div>
+
+                            <div class="max-value numberVal">
+                                <input type="number" min="0" max="30000000" value="22500000" disabled>
+                            </div>
+                            <!-- <input type="text" class="js-range-slider" name="my_range" value="" data-type="double" data-min="0" data-max="3000" data-step="10"/> -->
+                        </div>
+
+
+
+
+
+                        <!-- <component class='multiRange d-none'></component>
+                        <component class='multiRange type1'></component> -->
+
+
+                    </div>
+                    <div class="sort__producer row d-flex justify-content-center align-items-center">
+                        <div class="left__producer-title col-md-11" style="padding-top:10px;">
+                            <h5>LỌC THEO HÃNG</h5>
+                        </div>
+                        <div class="left__producer-list col-md-11">
+                            <div class="left__producer-item form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    ALCOTT
+                                </label>
+                            </div>
+                            <div class="left__producer-item form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    ANBICO
+                                </label>
+                            </div>
+                            <div class="left__producer-item form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    AOGLI
+                                </label>
+                            </div>
+                            <div class="left__producer-item form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    ASAMA
+                                </label>
+                            </div>
+                            <div class="left__producer-item form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    CALIFORNIA
+                                </label>
+                            </div>
+                            <div class="left__producer-item form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    DEALIM
+                                </label>
+                            </div>
+                            <div class="left__producer-item form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    DETECH
+                                </label>
+                            </div>
+                            <div class="left__producer-item form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    DKBIKE
+                                </label>
+                            </div>
+                            <div class="left__producer-item form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    VINFAST
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="container__right col-md-9 bg-light">
+                    <div class="container__right-top">
+                        <div class="top__sort">
+                            <form action="">
+                                <div class="d-flex">
+                                    <label for="">Sắp xếp theo: </label>
+                                    <select name="sort" style="padding: 5px; outline: none; border-radius: 5px;" 
+                                        class="ms-1" aria-label="Default select example"
+                                        onchange="this.form.submit()"
+                                    >
+                                        <option selected>Sắp xếp</option>
+                                        <option value="price.ASC">Giá tăng dần</option>
+                                        <option value="price.DESC">Giá giảm dần</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="container__right-center bg-light">
+                        <div class="product row">
+                            <div class="row" th:if="${!productPage.hasContent()}">
+                                <div class="col">
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong>Không tìm thấy sản phẩm nào</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="product__list row" th:if="${productPage.hasContent()}">
+                                <li th:each="product, stat : ${productPage.content}"
+                                    class="product__item col-sm-6 col-md-3">
+                                    <div class="product__item-bao">
+                                        <div class="product__item-top">
+                                            <div class="product__item-img d-block">
+                                                <a href="" class="img">
+                                                    <img th:src="${'/products/images/'+ product.productOptions[0].image}"
+                                                        src="./image/products/product_01.jpg"
+                                                        style="width: 100%; height: 100%; display:block" alt="">
+                                                </a>
+
+                                                <a th:href="@{'/products/' + ${product.id}}" class="view-info">Xem chi
+                                                    tiết</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="product__item-name text-center">
+                                            <label th:text="${'Xe đạp điện ' + product.name}" for="">Xe đạp điện Vinfast
+                                                new 2022</label>
+                                        </div>
+                                        <div class="product__item-price text-center">
+                                            <h5 th:text="${product.price + ' vnđ'}">11.000.000 vnđ
+                                            </h5>
+                                        </div>
+                                        <!-- btn -->
+                                        <!-- <div class="product__item-btnAction d-flex justify-content-center align-items-center">
+                                            <button type="button" class="btn btn-warning btnThemVaoGio" style="margin: 0 0 0 2px; width:60%;font-size:11px; font-weight: 500; color: white;">Thêm Vào Giỏ</button>
+                                            <button type="button" class="btn btn-danger btnMuaNgay" style="margin: 0 0 0 2px; width: 40%;font-size:11px;font-weight: 500;">Mua Ngay</button>
+                                        </div> -->
+                                    </div>
+
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="container__right-bottom d-flex justify-content-center align-items-center">
+                        <nav aria-label="Page navigation example" th:if="${productPage.totalPages > 0}">
+                            <ul class="pagination">
+                                <li th:class="${1 == (productPage.number + 1) ? 'page-item active' : 'page-item'}">
+                                    <a class="page-link"
+                                        th:href="@{/products(catergoryId = ${catergoryId}, size = ${productPage.size}, page=${1} )}"
+                                        href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li th:if="${productPage.totalPages > 1}" th:each="pageNumber : ${pageNumbers}"
+                                    th:class="${productPage.totalPages == productPage.number + 1 ? 'page-item active' : 'page-item'}">
+                                    <a class="page-link"
+                                        th:href="@{/products(catergoryId = ${catergoryId}, size = ${productPage.size}, page=${pageNumber} )}"
+                                        th:text="${pageNumber}"></a>
+                                </li>
+
+                                <li th:if="${!(productPage.totalPages == 1)}"
+                                    th:class="${productPage.totalPages == productPage.number + 1 ? 'page-item active' : 'page-item'}">
+                                    <a class="page-link"
+                                        th:href="@{/products(catergoryId = ${catergoryId}, size = ${productPage.size}, page=${productPage.totalPages} )}"
+                                        href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

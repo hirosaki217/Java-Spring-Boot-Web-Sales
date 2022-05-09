@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/main}"
+>
+    <head>
+       <title>thanh toán</title>
+       <link rel="stylesheet" href="css/gioHang.css">
+    </head>
+
+    <body>
+        <div layout:fragment="content">
+            <div class="wrapper container">
+                <div class="mb-3 row">
+                    <div class="col-7">
+                        <h4><span class="text-muted">Thanh Toán</span></h4>
+                        <form class="pt-2">
+                            <div class="mb-3">
+                                <label class="form-label">Họ và Tên</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col-6">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label">SĐT</label>
+                                    <input type="text" class="form-control">
+                                </div>
+    
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Địa Chỉ</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Ghi chú</label>
+                                <textarea class="form-control" rows="3"></textarea>
+                            </div>
+                            <h5 class="form-check-label">Phương thanh toán</h5>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" checked>
+                                <label class="form-check-label">
+                                    Thanh toán khi nhận hàng
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio">
+                                <label class="form-check-label">
+                                    Chuyển khoản
+                                </label>
+                            </div>
+    
+                            <div class="pt-4">
+                                <button type="submit" class="btn btn-danger">Đặt Hàng</button>
+                            </div>
+    
+                        </form>
+    
+                    </div>
+                    <div class="col-5 pt-3">
+                        <h4><span class="text-muted">Giỏ hàng</span></h4>
+                        <ul class="list-group mb-3 pt-4">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Tổng thành tiền</span>
+                                <strong id="thanhTien">0đ</strong>
+                            </li>
+                        </ul>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Mã khuyến mãi">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-secondary">Xác nhận</button>
+                            </div>
+                        </div>
+    
+    
+                    </div>
+    
+    
+                </div>
+    
+    
+    
+    
+    
+    
+            </div>
+                
+        </div>
+    </body>
+</html>

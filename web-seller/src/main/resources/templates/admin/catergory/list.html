@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/layout-page-admin}">
+
+<head>
+    <title>Trang chủ</title>
+
+</head>
+
+<body>
+    <div layout:fragment="content">
+
+        <!-- <main class="container">
+
+            <section class="row">
+                <div class="col mt-4">
+                    <div class="card">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Danh sách loại sản phẩm</h2>
+                            </div>
+                            <div class="card-body">
+                                <div th:if="@{mesage != null}" class="alert alert-primary" role="alert">
+                                    <i>[[${message}]]</i>
+                                </div>
+                                <table class="table table-striped tablefa-inverse">
+                                    <thead class="thead-inverse">
+                                        <tr>
+                                            <th>Id Categorys</th>
+                                            <th>Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="catergory : ${catergorys}">
+                                            <td scope="row" th:text="${catergory.id}"></td>
+                                            <td th:text="${catergory.name}"></td>
+                                            <td>
+                                                <a th:href="@{'/admin/catergorys/delete/' + ${catergory.id}}"><i class="bi bi-trash text-danger text-center"></i></a> |
+                                                <a th:href="@{'/admin/catergorys/edit/' + ${catergory.id}}"><i class="bi text-success bi-pencil-square text-center"></i></a>
+                                                
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+
+
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main> -->
+        <h3 style="padding-top: 10px;text-align:center;">Danh sách loại xe</h3>
+        <div style="padding-right: 10px; padding-top: 10px;">
+           
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                <i class="bi bi-plus-circle"></i>
+            </button>
+            <!-- The Modal ADD -->
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Thêm nhà sản xuất</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body d-flex justify-content-center align-items-center">
+                            <form th:action="@{/admin/catergorys/saveOrUpdate}" method="post" th:object="${catergory}"
+                                class="form w-100 mt-3 d-flex flex-column justify-content-center align-items-center"
+                                enctype="multipart/form-data">
+                                <div class="mb-3" style="width: 100%;">
+                                    <label for="" class="form-label">Tên loại xe</label>
+                                    <input type="text" class="form-control" id="name" aria-describedby="nameError"
+                                        th:field="*{name}">
+                                    <!-- <div id="nameError" class="form-text"></div> -->
+                                </div>
+                                
+                                <div class="w-50 align-self-center">
+                                    <button type="submit" class="btn btn-primary w-100">Save</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end Modal ADD  -->
+
+        
+
+
+            <div class="row" style=" margin-top: 10px; margin-bottom:10px; padding-right: 15px;">
+                <div class="col-md-12">
+                    <form method="get" action="#" th:action="@{/admin/catergorys/search}">
+                        
+                        <div class="row" style="margin-top: 10px; margin-bottom:10px ;padding-left:10px">
+                            <input type="text" class="form-control nav-input-search" name="name" id="name"
+                                placeholder="Tìm theo tên..." autocomplete="on">
+
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+
+
+
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên loại</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each=" catergory : ${catergorys}">
+                        <td id="id" th:text="${catergory.id}"></td>
+                        <td id="name"  th:text="${catergory.name}"></td>
+                       
+                        <td> 
+                            
+                            <a th:id="${catergory.id}" onclick="modalHandler(this)"  data-bs-toggle="modal" data-bs-target="#modalUpdate">
+                            <i class="bi text-success bi-pencil-square text-center"></i>
+                            </a>
+                            <a th:href="@{'/admin/catergorys/delete/'+${catergory.id}}"><i
+                                    class="bi bi-trash text-danger text-center"></i></a>
+                        </td>
+
+                    </tr>
+                </tbody>
+                
+            </table>
+            <!-- The Modal update -->
+            <div class="modal" id="modalUpdate">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Sửa loại xe</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body d-flex justify-content-center align-items-center">
+                            <form th:action="@{/admin/catergorys/update}" method="post" th:object="${catergory}"
+                                class="form w-100 mt-3 d-flex flex-column justify-content-center align-items-center"
+                                enctype="multipart/form-data">
+                                <input hidden type="text" class="form-control text-edit-id" th:field="*{id}">
+                                <div class="mb-3" style="width: 100%;">
+                                    <label for="" class="form-label">Tên loại xe</label>
+                                    <input type="text" class="form-control text-edit-name" id="name" aria-describedby="nameError"
+                                        th:field="*{name}">
+                                    <!-- <div id="nameError" class="form-text"></div> -->
+                                </div>
+                                
+                                <div class="w-50 align-self-center">
+                                    <button type="submit" class="btn btn-primary w-100">Sửa</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+                <script>
+                    function modalHandler(target){
+                        var id = target.getAttribute("id");
+                        var trElement = target.parentElement.parentElement;
+                        var name = trElement.querySelector("#name");
+                       
+                        
+
+                        document.querySelector(".text-edit-id").value = id;
+                        document.querySelector(".text-edit-name").value = name.innerText;
+                       
+                        
+                    }
+                </script>
+            </div>
+            <!-- end Modal update  -->
+        </div>
+    
+    </div>
+</body>
+
+</html>

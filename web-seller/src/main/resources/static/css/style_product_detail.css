@@ -1,0 +1,76 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+.xzoom{
+  box-shadow: none;
+}
+.price_min span {
+  font-size: 19px;
+  color: red;
+  font-weight: bold;
+  margin: 0 0 0 10px;
+}
+
+.quantity.buttons_added .minus, .quantity.buttons_added .plus {
+  padding: 0 15px;
+  height: 30px;
+  border: 1px solid #efefef;
+  cursor: pointer;
+  color: black;
+  background: transparent;
+}
+
+.quantity .input-text.qty {
+  width: 80px;
+  height: 30px;
+  padding: 0 5px;
+  text-align: center;
+  background-color: transparent;
+  border: 1px solid #ebebeb;
+  white-space: normal;
+  appearance: none;
+}
+
+.quantity.buttons_added input::-webkit-outer-spin-button,
+.quantity.buttons_added input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.quantity.buttons_added input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.note {
+  display: block;
+  margin: 20px 0 0 0;
+  color: #ff0000;
+  font-weight: 600;
+}
+
+.styleBtnAdd  {
+  background: #058cee;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 10px;
+  font-size: 20px;
+  margin: 20px 0 0 0;
+  float: left;
+  outline: none;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc((100% - 7px)/2);
+  height: 48px;
+}
+.styleBtnOrder{
+  background: red;
+}

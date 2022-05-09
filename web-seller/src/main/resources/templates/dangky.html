@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/main}"
+>
+    <head>
+       <title>Đăng ký</title>
+       <link rel="stylesheet" href="css/dangky.css">
+    </head>
+
+    <body>
+        <div layout:fragment="content">
+            <div class="wrapper row">
+                <div class="container col-10 col-sm-7 col-md-4 bg-light" style="margin-top:20px">
+                    <form action="">
+                        <div class="form__registration-title d-flex justify-content-between m-3">
+                            <h3>Đăng ký</h3>
+                            <a href="dangNhap.html" >Đăng nhập</a>
+                        </div>
+                        <div class="form__registration-center">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="inputName" aria-describedby="nameError" placeholder="Nhập họ tên">
+                                <div id="nameError" hidden class="form-text">không có số và kí tự đặc biệt</div>
+                              </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="inputUserName" aria-describedby="userNameError" placeholder="Nhập tên đăng nhập">
+                                <div id="userNameError" hidden class="form-text">tên đăng nhập đã tồn tại</div>
+                              </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="inputPhone" aria-describedby="phoneError" placeholder="Nhập số điện thoại">
+                                <div id="phoneError" hidden class="form-text">Số điện thoại đã tồn tại</div>
+                              </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" id="inputEmail" aria-describedby="emailError" placeholder="Nhập Email">
+                                <div id="emailError" hidden class="form-text">Email đã tồn tại</div>
+                              </div>
+                              <div class="mb-3">
+                                <input type="password" class="form-control" id="inputPassword" aria-describedby="passError" placeholder="Nhập mật khẩu">
+                                <div id="passError" hidden class="form-text">Chữ hoa có số plapla..</div>
+                              </div>
+                              <div class="mb-3">
+                                <input type="password" class="form-control" id="inputRePassword" aria-describedby="rePassError"  placeholder="Nhập lại mật khẩu">
+                                <div id="rePassError" hidden class="form-text">Nhập lại không đúng mật khẩu</div>
+                              </div>
+                              
+                        </div>
+                        <div class="form__registration-bottom d-flex justify-content-center justify-content-sm-center d-sm-flex justify-content-sm-center d-md-flex justify-content-md-end">
+                            <button id="btnBack" type="submit" class="btn btnBack col-6 col-sm-6 col-md-3"><a href="dangNhap.html" class="btn-back__link d-block">Trở lại</a></button>
+                            <button type="submit" class="btn btnRegistration col-6 col-sm-6 col-md-3"><a href="" class="btn-registration__link d-block">Đăng ký</a></button>
+                        </div>
+                        
+                    </form>
+                </div>
+        </div>
+        </div>
+    </body>
+</html>

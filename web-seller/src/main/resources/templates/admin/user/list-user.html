@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{admin/layout-page-admin}"
+>
+    <head>
+        <title>Trang chủ</title>
+
+    </head>
+
+    <body>
+        <div class="app">
+            <div layout:fragment="content">
+                <h3 style="padding-top: 10px;text-align:center;">Danh sách người dùng</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Ảnh</th>
+                            <th>Tên</th>
+                            <th>Họ</th>
+                            <th>Địa Chỉ</th>
+                            <th>Số Điện Thoại</th>
+                            <th>Email</th>
+                            <th>Ngày Đăng Ký</th>
+                            <th>Tên Đăng Nhập</th>
+                            <th>Mật Khẩu</th>
+                            <th>Trạng Thái</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="user : ${users}">
+                            <td><img style="width: 52px;" th:src="${user.image != null ? '/admin/users/images/'+ user.image : '/image/default-image.jpg'}" src="/image/default-image.jpg" alt=""></td>
+                            <td th:text="${user.username}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

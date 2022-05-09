@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/main}"
+>
+    <head>
+       <title>Thông tin</title>
+       <link rel="stylesheet" href="css/user.css">
+    </head>
+
+    <body>
+        <div layout:fragment="content">
+            <div class="wrapper row justify-content-center">
+                <div class="container row col-md-10">
+                    <div class="container__left col-12 col-sm-12 col-lg-2 col-xl-2 col-md-2">
+                        <div>
+                            <div class="infoUser row d-sm-none d-none d-md-flex " style="border-bottom: 1px solid #efefef;">
+                                <div
+                                    class="imgUser d-flex justify-content-center align-items-center col-12 col-sm-12 col-lg-4 col-xl-4 col-md-4">
+                                    <img style="width: 50px;height: 50px; border-radius:50%;" src="/image/a.jpg" alt="...">
+                                </div>
+                                <div
+                                    class="name-user col-12 col-sm-12 col-lg-8 col-xl-8 col-md-8  d-flex justify-content-between align-items-center text-start">
+                                    <span class="name-user__item" style="text-align: center;font-weight: bold;">phong</span>
+    
+                                </div>
+                            </div>
+    
+                            <div class="taiKhoan__dropdown mt-4">
+                                <div class="dropdown__select">
+                                    <label for="tai-khoan" class="dropdown__selected js-user"><i
+                                            class="fas fa-user"></i><span style="margin-left: 10px;">Tài khoản của
+                                            tôi</span></label>
+                                    <ul class="dropdown__list">
+                                        <li class="dropdown__item active">
+                                            <span class="dropdown__text">
+                                                Hồ sơ
+                                            </span>
+                                        </li>
+                                        <li class="dropdown__item">
+                                            <span class="dropdown__text">
+                                                Địa chỉ
+                                            </span>
+                                        </li>
+                                        <li class="dropdown__item">
+                                            <span class="dropdown__text">
+                                                Đổi mật khẩu
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+    
+                            </div>
+                            <div class="donMua active js-cart">
+                                <i class="fas fa-file-invoice"></i>
+                                <span style="margin-left: 10px;">Đơn mua</span>
+                            </div>
+                        </div>
+    
+    
+    
+                    </div>
+    
+                    <div
+                        class="container__center container__center_cart col-12 col-sm-12 col-lg-10 col-xl-10 col-md-10 d-none active-layout">
+                        <!-- <div class="donMua_quyTrinh row d-flex justify-content-center align-items-center" style="height:50px;">
+                            <div  class="donMua__tatCa col-4 col-sm-4 col-md-2 text-center d-flex justify-content-center align-items-center h-100"><span>Tất cả</span></div>
+                            <div class="donMua__choXacNhan col-4 col-sm-4 col-md-2 text-center d-flex justify-content-center align-items-center h-100"><span>Chờ xác nhận</span></div>
+                            <div class="donMua__choLayHang col-4 col-sm-4 col-md-2 text-center d-flex justify-content-center align-items-center h-100"><span>Chờ lấy hàng</span></div>
+                            <div class="donMua__dangGiao col-4 col-sm-4 col-md-2 text-center d-flex justify-content-center align-items-center h-100"><span>Đang giao</span></div>
+                            <div class="donMua__daGiao col-4 col-sm-4 col-md-2 text-center d-flex justify-content-center align-items-center h-100"><span>Đã giao</span></div>
+                            <div class="donMua__daHuy col-4 col-sm-4 col-md-2 text-center d-flex justify-content-center align-items-center h-100"><span>Đã hủy</span></div>
+                        </div> -->
+                        <nav class="quyTrinh-category ">
+                            <ul class="quyTrinh-category__list" style="height:50px;">
+                                <li
+                                    class="quyTrinh-category__item col-4 col-sm-4 col-md-2 text-center d-flex justify-content-center align-items-center h-100 ">
+                                    <a href="" class="quyTrinh-category__link d-block">Tất cả</a>
+                                </li>
+                                <li
+                                    class="quyTrinh-category__item col-4 col-sm-4 col-md-2 text-center d-flex justify-content-center align-items-center h-100 ">
+                                    <a href="" class="quyTrinh-category__link ">Chờ xác nhận</a>
+                                </li>
+                                <li
+                                    class="quyTrinh-category__item col-4 col-sm-4 col-md-2 text-center d-flex justify-content-center align-items-center h-100 ">
+                                    <a href="" class="quyTrinh-category__link ">Chờ lấy hàng</a>
+                                </li>
+                                <li
+                                    class="quyTrinh-category__item col-4 col-sm-4 col-md-2 text-center d-flex justify-content-center align-items-center h-100 ">
+                                    <a href="" class="quyTrinh-category__link ">Đang giao</a>
+                                </li>
+                                <li
+                                    class="quyTrinh-category__item col-4 col-sm-4 col-md-2 text-center d-flex justify-content-center align-items-center h-100 ">
+                                    <a href="" class="quyTrinh-category__link ">Đã giao</a>
+                                </li>
+                                <li
+                                    class="quyTrinh-category__item col-4 col-sm-4 col-md-2 text-center d-flex justify-content-center align-items-center h-100 ">
+                                    <a href="" class="quyTrinh-category__link ">Đã hủy</a>
+                                </li>
+    
+    
+    
+    
+                            </ul>
+                        </nav>
+                        <div class="row donMua__timKiem" style="margin-top: 10px; margin-bottom:10px">
+                            <input type="text" class="form-control nav-input-search"
+                                placeholder="Tìm sản phẩm theo thên shop, ID đơn hàng..." autocomplete="on">
+    
+                        </div>
+                        <div class="donMua__listDonMua">
+                            <a id="donMuaItem" href="chiTienDonHang.html">
+                                <div class="donMua__itemDonMua p-0">
+                                    <div class="itemDonMua__top row" style="border-radius: 5px">
+                                        <div
+                                            class="itemDonMua__img d-flex justify-content-center align-items-center col-12 col-sm-2 col-md-1 p-1">
+                                            <img style="width:90%;height:90%;" src="../image/xe1.jpg" alt="...">
+                                        </div>
+                                        <div class="itemDonMua__info col-sm-7 col-md-8 " style="padding-top:10px;">
+                                            <span>Tai nghe nhét tai TOPK F20 Chống ồn tích hợp Micro và điều khiển âm
+                                                lượng</span>
+                                            <br><span>x1</span>
+                                        </div>
+                                        <div class="itemDonMua__TrangThai col-sm-3 row col-md-3" style="padding-top:10px">
+                                            <div class="trangThai text-end col-md-12 "><span
+                                                    style="color:#ee4d2d; border-bottom: 1px solid #efefef">ĐÃ GIAO</span></div>
+                                            <div class="giaTien text-end col-md-12 "><span
+                                                    style="color:#ee4d2d;font-size: 14px; font-weight: 470;">25.000 VNĐ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="itemDonMua__bottom row"
+                                        style="background-color: white; border-top: #efefef 1px solid;border-bottom: 2px solid #efefef ;border-radius: 5px; padding-top: 15px; padding-bottom: 15px;margin-bottom: 10px;">
+                                        <div class="itemDonMua__tongTien row text-end mt-2 mb-2">
+                                            <span class="col-sm-8 col-md-9">Tổng tiền: </span> <span class="col-sm-4 col-md-3"
+                                                style="color:#ee4d2d;font-size: 20px;">25.000 VNĐ</span>
+                                        </div>
+                                        <div class="itemDonMua_btn d-flex justify-content-end align-items-end">
+                                            <button type="button" class="btn btn-danger btnMuaLai"
+                                                style="background:#ee4d2d; width:150px">Mua lại</button>
+                                            <button type="button" class="btn btn-light btnLienHe"
+                                                style="border:1px solid #efefef;margin-left: 10px; margin-right: 25px;">Liên hệ
+                                                người bán</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            
+    
+                        </div>
+    
+                    </div>
+    
+                    <div
+                        class="container__center container__center_user col-12 col-sm-12 col-lg-10 col-xl-10 col-md-10 d-none">
+                        <div class="">
+                            <h5 class="">Hồ sơ của tôi</h5>
+                            <div class="">Quản lý thông tin hồ sơ để bảo mật tài khoản</div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="row mb-4 mt-4">
+                                    <div class="col-4 text-end">
+                                        Tên Đăng Nhập
+                                    </div>
+                                    <div class="col-8">
+                                        <span>khanhdii</span>
+                                    </div>
+                                </div>
+                                <div class="row mb-4 mt-4">
+                                    <div class="col-4 text-end">Tên</div>
+                                    <div class="col-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-4 text-end">
+                                        Email
+                                    </div>
+                                    <div class="col-8">
+                                        <span>phamduy2408@gmail.com</span> <a href="">Thay đổi</a>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-4 text-end">
+                                        Số Điện Thoại
+                                    </div>
+                                    <div class="col-8">
+                                        <span>0793464997</span> <a href="">Thay đổi</a>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-4 text-end">
+                                        Giới Tính
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="form-check p-0">
+                                            <input type="radio" name="gender" checked>
+                                            <label for="">Nam</label>
+                                            <input type="radio" name="gender">
+                                            <label for="">Nữ</label>
+                                            <input type="radio" name="gender">
+                                            <label for="">Khác</label>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="row mb-4">
+                                    <div class="col-4 text-end">
+                                        Ngày Sinh
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="date">
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-4 text-end">
+    
+                                    </div>
+                                    <div class="col-8">
+                                        <button class="btn btn-primary">Lưu</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="d-flex flex-column">
+                                    <img class="imgUser__info" src="/image/a.jpg" alt="">
+                                    <button class="btn btn-light mt-3" style="width: 120px; margin: auto;">Chọn ảnh</button>
+                                    <div class="note-upload-img">Dụng lượng file tối đa 1 MB</div>
+                                    <div class="note-upload-img">Định dạng:.JPEG, .PNG</div>
+                                </div>
+    
+                            </div>
+                        </div>
+    
+                    </div>
+    
+                    <div
+                        class="container__center container__center_user col-12 col-sm-12 col-lg-10 col-xl-10 col-md-10 d-none">
+                        <h5>Địa Chỉ Của Tôi</h5>
+                        <hr class="mt-4">
+                        <div class="row mt-3">
+                            <div class="col-8">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-4 text-end">
+                                        <span>Họ và tên</span>
+                                    </div>
+                                    <div class="col-8">
+                                        <span style="color: rgba(0,0,0,.8); font-weight: 500; font-size: 20px;">Phạm Lê
+                                            Khánh Duy</span>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4 text-end">
+                                        <span>Số điện thoại</span>
+                                    </div>
+                                    <div class="col-8">
+                                        <span>0793464997</span>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4 text-end">
+                                        <span>Địa chỉ</span>
+                                    </div>
+                                    <div class="col-8">
+                                        <span>Cuối Hẻm C7D, Đường Phạm Hùng
+                                            Xã Bình Hưng, Huyện Bình Chánh, TP. Hồ Chí Minh</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <a data-bs-toggle="modal" data-bs-target="#modelId" href="">Sửa</a>
+                                <a class="ms-1" href="">Xóa</a>
+                            </div>
+                        </div>
+    
+                    </div>
+    
+                    <div
+                        class="container__center container__center_user col-12 col-sm-12 col-lg-10 col-xl-10 col-md-10 d-none">
+                        <h5>Đổi Mật Khẩu</h5>
+                        <p>Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho người khác</p>
+                        <hr class="mt-4">
+                        <div class="row mt-3">
+                            <div class="col-8">
+                                <div class="row mt-3">
+                                    <div class="col-4 text-end">
+                                        Mật Khẩu Hiện Tại
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="password" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4 text-end">
+                                        Mật Khẩu Mới
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="password" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4 text-end">
+                                        Xác Nhận Mật Khẩu
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="password" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">
+    
+                                    </div>
+                                    <div class="col-8">
+                                        <button class="btn btn-success">Xác Nhận</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="row mt-3">
+                                    <a href="">Quên mật khẩu?</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+    
+    
+        
+    
+        </div>
+    
+        <!-- Modal -->
+        <div class="modal fade" id="modelId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa địa chỉ</h5>
+                    </div>
+                    <div class="modal-body mb-3">
+                        <div class="row mt-3">
+                            <div class="col-6 form-floating">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="Full Name">
+                                <label for="floatingInput">Họ và Tên</label>
+                            </div>
+                            <div class="col-6 form-floating">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="(+84) 000000000">
+                                <label for="floatingInput">Số điện thoại</label>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 form-floating">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="TP. Hồ Chí Minh">
+                                <label for="floatingInput">Địa Chỉ</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Trở Lại</button>
+                        <button type="button" class="btn btn-primary">Hoàn Thành</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <script>
+
+            const user = document.querySelector('.js-user');
+            const cart = document.querySelector('.js-cart');
+            const drop = document.querySelector('.dropdown__list');
+            const drops = drop.getElementsByTagName('li');
+            const layoutCart = document.querySelector('.container__center_cart');
+            const layoutUser = document.querySelectorAll('.container__center_user');
+            user.addEventListener('click', function () {
+                if (cart.classList.contains('active') && layoutCart.classList.contains('active-layout')) {
+                    cart.classList.remove('active');
+                    drops[0].classList.add('active');
+                    drop.style.height = '70px';
+                    layoutCart.classList.remove('active-layout');
+                    layoutUser[0].classList.add('active-layout');
+                } else {
+                    document.querySelector('.active').classList.remove('active');
+                    drops[0].classList.add('active');
+                    document.querySelector('.active-layout').classList.remove('active-layout');
+                    layoutUser[0].classList.add('active-layout');
+                }
+            })
+            cart.addEventListener('click', function () {
+                if (!cart.classList.contains('active') && !layoutCart.classList.contains('active-layout')) {
+                    document.querySelector('.active').classList.remove('active');
+                    cart.classList.add('active');
+                    drop.style.height = '0';
+                    document.querySelector('.active-layout').classList.remove('active-layout');
+                    layoutCart.classList.add('active-layout');
+                }
+            })
+            for (let index = 0; index < drops.length; index++) {
+                const element = drops[index];
+                element.addEventListener('click', function () {
+                    if (element !== document.querySelector('.active')) {
+                        document.querySelector('.active').classList.remove('active');
+                        element.classList.add('active')
+                        document.querySelector('.active-layout').classList.remove('active-layout');
+                        layoutUser[index].classList.add('active-layout');
+                    }
+                })
+            }
+        </script>
+        </div>
+        
+    </body>
+</html>

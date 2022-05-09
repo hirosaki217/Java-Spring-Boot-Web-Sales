@@ -12,10 +12,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nhom11.webseller.dao.ProductRepository;
 import com.nhom11.webseller.dto.ProductRequest;
 import com.nhom11.webseller.model.Product;
 import com.nhom11.webseller.model.ProductOption;
+import com.nhom11.webseller.repository.ProductRepository;
 import com.nhom11.webseller.service.ProductOptionService;
 import com.nhom11.webseller.service.ProductService;
 
@@ -24,11 +24,32 @@ import com.nhom11.webseller.service.ProductService;
 public class ProductServiceImpl implements ProductService{
 	@Autowired
 	private ProductRepository productRepository;
-	
+
+
 	@Autowired
 	private ProductOptionService optionService;
 	
-	
+	@Override
+	public List<Product> findByNameContaining(String name) {
+		return productRepository.findByNameContaining(name);
+	}
+
+	@Override
+	public Page<Product> findByCatergoryId(long catergoryId, Pageable pageable) {
+		return productRepository.findByCatergoryId(catergoryId, pageable);
+	}
+	@Override
+	public Page<Product> findProducts(Pageable pageable) {
+		return productRepository.findProducts(pageable);
+	}
+
+
+
+	@Override
+	public Page<Product> findByNameContaining(String name, Pageable pageable) {
+		return productRepository.findByNameContaining(name, pageable);
+	}
+
 	@Override
 	public void flush() {
 		productRepository.flush();
@@ -89,6 +110,8 @@ public class ProductServiceImpl implements ProductService{
 	public <S extends Product> List<S> findAll(Example<S> example, Sort sort) {
 		return productRepository.findAll(example, sort);
 	}
+
+
 
 
 	

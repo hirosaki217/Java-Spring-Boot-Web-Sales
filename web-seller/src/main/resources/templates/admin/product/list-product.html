@@ -1,71 +1,72 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" layout:xmlns="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{admin/layout-page-admin}">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{admin/layout-page-admin}"
+>
+    <head>
+        <title>Trang chủ</title>
 
-</html>
+    </head>
 
-<head>
-    <title>list-product</title>
-    <style>
+    <body>
+        <div class="app">
+            <div layout:fragment="content">
+                <h3 style="padding-top: 10px;text-align:center;">Danh sách Xe</h3>
+                <div class="" style="margin-bottom: 10px;">
+                    <a th:href="@{/products/admin/addForm}" class="btn btn-success"><i class="bi bi-plus-square-fill"></i> Thêm sản phẩm</a>
+                </div>
 
-    </style>
-</head>
+                <div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tên xe</th>
+                                <th>Acquy</th>
+                                <th>Phân Loại</th>
+                                <th>Nhà sản xuất</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
 
-<body>
-    <div class="app">
-        <div layout:fragment="content">
-            <div>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Tên xe</th>
-                            <th>Acquy</th>
-                            <th>Phân Loại</th>
-                            <th>Nhà sản xuất</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
+                        <tbody>
+                            <tr th:each="item : ${products}">
+                                <td th:text="${item.name}">
+                                    ABC
+                                </td>
+                                <td th:text="${item.battery}">
+                                    15kmA
+                                </td>
+                                <td th:text="${item.catergory.name}">
+                                    OSAKAR
+                                </td>
+                                <td th:text="${item.manufacturer.name}">
+                                    JAPAN
+                                </td>
+                                <td>
+                                    <a id="btnDelete" th:href="@{'/products/admin/delete/' + ${item.id}}"><i class="bi bi-trash text-danger text-center"></i></a> |
+                                    <a  th:href="@{'/products/admin/edit/' + ${item.id}}"><i class="bi text-success bi-pencil-square text-center"></i></i></a>
 
-                    <tbody>
-                        <tr th:each="item : ${products}">
-                            <td th:text="${item.name}">
-                                ABC
-                            </td>
-                            <td th:text="${item.battery}">
-                                15kmA
-                            </td>
-                            <td th:text="${item.catergory.name}">
-                                OSAKAR
-                            </td>
-                            <td th:text="${item.manufacturer.name}">
-                                JAPAN
-                            </td>
-                            <td>
-                                <a id="btnDelete" th:href="@{'/admin/products/delete/' + ${item.id}}"><i class="bi bi-trash text-danger text-center"></i></a> |
-                                <a  th:href="@{'/admin/products/edit/' + ${item.id}}"><i class="bi text-success bi-pencil-square text-center"></i></i></a>
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <script>
-        var btnDelete = document.querySelector("#btnDelete");
-        btnDelete.addEventListener("click", (e)=>{
-            e.preventDefault();
-            
-            var rs = confirm("xóa sản phẩm này ?");
-            var element = e.target;
-            console.log(e.target);
-            if(e.target.tagName == 'I')
-                element = element.parentElement;
-            
-            if(rs)
-                window.location.href=element.href;
-        });
-    </script>
-</body>
+        <script>
+            var btnDelete = document.querySelector("#btnDelete");
+            btnDelete.addEventListener("click", (e)=>{
+                e.preventDefault();
 
+                var rs = confirm("xóa sản phẩm này ?");
+                var element = e.target;
+                console.log(e.target);
+                if(e.target.tagName == 'I')
+                    element = element.parentElement;
+
+                if(rs)
+                    window.location.href=element.href;
+            });
+        </script>
+    </body>
 </html>

@@ -1,6 +1,8 @@
 package com.nhom11.webseller.model;
 
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +22,7 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductOption {
+public class ProductOption implements Serializable{
 	@Id
 	@GeneratedValue
 	private long id;

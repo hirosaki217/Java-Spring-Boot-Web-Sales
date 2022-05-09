@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{admin/layout-page-admin}"
+>
+    <head>
+        <title>Trang chủ</title>
+        
+    </head>
+
+    <body>
+        <div layout:fragment="content">
+            <form th:action="@{/admin/manufacturers/update}" method="post" th:object="${manufacturer}"
+            class="form w-75 mt-5 d-flex flex-column justify-content-center align-items-center"
+            enctype="multipart/form-data" >
+            <div class="mb-3">
+                <input hidden type="text" class="form-control" th:field="*{id}">
+                <label for="exampleInputEmail1" class="form-label">Tên nhà sản xuất</label>
+                <input type="text" class="form-control" id="name" aria-describedby="nameError" th:field="*{name}">
+                <!-- <div id="nameError" class="form-text"></div> -->
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Quốc gia</label>
+                <input type="text" class="form-control" id="country" aria-describedby="countryError" th:field="*{country}">
+                <!-- <div id="countryError" class="form-text"></div> -->
+              </div>
+            <div class="w-50 align-self-center">
+                <button type="submit" class="btn btn-primary w-100">Update</button>
+            </div>
+        </form>
+        </div>
+    </body>
+</html>

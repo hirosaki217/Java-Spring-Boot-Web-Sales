@@ -24,36 +24,39 @@ public class User {
 	@Id
 	@Column(columnDefinition = "varchar(50)", nullable = false)
 	private String username;
-	
+
 	@Column(columnDefinition = "char(68)", nullable = false)
 	private String password;
-	
+
 	@Column(columnDefinition = "tinyint")
 	private boolean enabled;
-	
+
 	@Column(name = "first_name",columnDefinition = "nvarchar(100)")
 	private String firstName;
 	@Column(name = "last_name",columnDefinition = "nvarchar(100)")
 	private String lastName;
-	
+
 	@Column(columnDefinition = "nvarchar(255)")
 	private String address;
-	
+
 	@Column(columnDefinition = "varchar(50)")
 	private String email;
-	
+
 	@Column(columnDefinition = "varchar(15)")
 	private String mobile;
-	
+
 	@Column(name = "registered_at")
 	private Date registeredAt;
-	
-	
+
+	@Column(columnDefinition = "nvarchar(255)", nullable = false)
+	private String image;
+
+
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private List<Authority> authorities;
-	
+
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude

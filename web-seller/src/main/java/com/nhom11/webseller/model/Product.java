@@ -1,11 +1,12 @@
 package com.nhom11.webseller.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +26,7 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor(staticName = "build")
 @NoArgsConstructor
-public class Product {
+public class Product implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -49,6 +50,8 @@ public class Product {
 	private int distanceMin;
 	@Column(name = "distance_max")
 	private int distanceMax;
+	
+	private float price;
 	
 	@ManyToOne
 	@JoinColumn(name = "manufacturer_id")
@@ -84,4 +87,6 @@ public class Product {
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private List<CartItem> cartItems;
+	
+	
 }

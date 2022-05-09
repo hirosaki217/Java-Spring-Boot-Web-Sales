@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/main}"
+>
+    <head>
+       <title>Đăng nhập</title>
+       <link rel="stylesheet" href="css/dangNhap.css">
+    </head>
+
+    <body>
+        <div layout:fragment="content">
+            <div class="wrapper">
+                <div id="wrapper">
+                    <form id="form-login">
+                        <div class="form-heading">Đăng Nhập</div>
+                        <div class="form-group">
+                            <i class="fa-solid fa-users"></i>
+                            <input class="form-input" type="text" placeholder="Tên đăng nhập">
+                        </div>
+                        <div class="form-group">
+                            <i class="fa-solid fa-key"></i>
+                            <input class="form-input" type="password" placeholder="Mật khẩu">
+                            <div id="eye">
+                                <i class="fa-solid fa-eye"></i>
+                            </div>
+                        </div>
+                        <div id="dangKi">
+                            <a href="DangKi.html"><ins>Đăng Kí?</ins></a>
+                        </div>
+                        <div id="quenMk">
+                            <a href=""><ins>Quên mật khẩu?</ins></a>
+                        </div>
+                        <input type="submit" class="form-submit" value="Đăng nhập">
+    
+                    </form>
+    
+    
+                </div>
+            </div>
+            <!--Wrapper-->
+        </div>
+    </body>
+</html>

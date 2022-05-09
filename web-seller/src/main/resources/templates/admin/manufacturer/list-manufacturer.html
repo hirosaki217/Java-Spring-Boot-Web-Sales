@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/layout-page-admin}">
+
+<head>
+    <title>Trang chủ</title>
+
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <h3 style="padding-top: 10px;text-align:center;">Danh sách nhà sản xuất</h3>
+        <div style="padding-right: 10px;">
+            <!-- <a class="btn btn-success" th:href="@{/admin/manufacturers/addForm}"><i class="bi bi-plus-circle"></i></a> -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                <i class="bi bi-plus-circle"></i>
+            </button>
+            <!-- The Modal ADD -->
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Thêm nhà sản xuất</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body d-flex justify-content-center align-items-center">
+                            <form th:action="@{/admin/manufacturers/save}" method="post" th:object="${manufacturer}"
+                                class="form w-100 mt-3 d-flex flex-column justify-content-center align-items-center"
+                                enctype="multipart/form-data">
+                                <div class="mb-3" style="width: 100%;">
+                                    <label for="" class="form-label">Tên nhà sản xuất</label>
+                                    <input type="text" class="form-control" id="name" aria-describedby="nameError"
+                                        th:field="*{name}">
+                                    <!-- <div id="nameError" class="form-text"></div> -->
+                                </div>
+                                <div class="mb-3" style="width: 100%;">
+                                    <label for="" class="form-label">Quốc gia</label>
+                                    <input type="text" class="form-control" id="country" aria-describedby="countryError"
+                                        th:field="*{country}">
+                                    <!-- <div id="countryError" class="form-text"></div> -->
+                                </div>
+                                <div class="w-50 align-self-center">
+                                    <button type="submit" class="btn btn-primary w-100">Save</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end Modal ADD  -->
+
+        
+
+
+            <div class="row" style=" margin-top: 10px; margin-bottom:10px; padding-right: 15px;">
+                <div class="col-md-12">
+                    <form method="get" action="#" th:action="@{/admin/manufacturers/search}">
+                        <!-- <div class="input-group">
+                            <div class="form-outline">
+                              <input type="search" class="form-control" name="name" id="name" placeholder="Tìm theo tên"/>
+                            </div>
+                            <button type="button" class="btn btn-primary">
+                                Tìm
+                              </button>
+                        </div> -->
+                        <div class="row" style="margin-top: 10px; margin-bottom:10px ;padding-left:10px">
+                            <input type="text" class="form-control nav-input-search" name="name" id="name"
+                                placeholder="Tìm theo tên..." autocomplete="on">
+
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+
+
+
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Hãng sản xuất</th>
+                        <th>Quốc gia</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each=" manufacturer : ${manufacturers}">
+                        <td hidden th:text="${manufacturer.id}"></td>
+                        <td id="name"  th:text="${manufacturer.name}"></td>
+                        <td id="country"  th:text="${manufacturer.country}"></td>
+                        <td> 
+                            <!-- <a th:href="@{'/admin/manufacturers/update/'+${manufacturer.id}}"  data-bs-toggle="modal" data-bs-target="#modalUpdate"> -->
+                            <a th:id="${manufacturer.id}" onclick="modalHandler(this)"  data-bs-toggle="modal" data-bs-target="#modalUpdate">
+                            <i class="bi text-success bi-pencil-square text-center"></i>
+                            </a>
+                            <a th:href="@{'/admin/manufacturers/delete/'+${manufacturer.id}}"><i
+                                    class="bi bi-trash text-danger text-center"></i></a>
+                        </td>
+
+                    </tr>
+                </tbody>
+                
+            </table>
+            <!-- The Modal update -->
+            <div class="modal" id="modalUpdate">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Sửa nhà sản xuất</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body d-flex justify-content-center align-items-center">
+                            <form th:action="@{/admin/manufacturers/update}" method="post" th:object="${manufacturer}"
+                                class="form w-100 mt-3 d-flex flex-column justify-content-center align-items-center"
+                                enctype="multipart/form-data">
+                                <input hidden type="text" class="form-control text-edit-id" th:field="*{id}">
+                                <div class="mb-3" style="width: 100%;">
+                                    <label for="" class="form-label">Tên nhà sản xuất</label>
+                                    <input type="text" class="form-control text-edit-name" id="name" aria-describedby="nameError"
+                                        th:field="*{name}">
+                                    <!-- <div id="nameError" class="form-text"></div> -->
+                                </div>
+                                <div class="mb-3" style="width: 100%;">
+                                    <label for="" class="form-label">Quốc gia</label>
+                                    <input type="text" class="form-control text-edit-country" id="country" aria-describedby="countryError"
+                                        th:field="*{country}">
+                                    <!-- <div id="countryError" class="form-text"></div> -->
+                                </div>
+                                <div class="w-50 align-self-center">
+                                    <button type="submit" class="btn btn-primary w-100">Sửa</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+                <script>
+                    function modalHandler(target){
+                        var id = target.getAttribute("id");
+                        var trElement = target.parentElement.parentElement;
+                        var name = trElement.querySelector("#name");
+                        var country = trElement.querySelector("#country");
+                        
+
+                        document.querySelector(".text-edit-id").value = id;
+                        document.querySelector(".text-edit-name").value = name.innerText;
+                        document.querySelector(".text-edit-country").value = country.innerText;
+                        
+                    }
+                </script>
+            </div>
+            <!-- end Modal update  -->
+        </div>
+    </div>
+</body>
+
+</html>

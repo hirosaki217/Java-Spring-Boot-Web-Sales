@@ -1,0 +1,44 @@
+
+.product{
+    border: 1px solid black;
+    margin: 10px 0;
+}
+.wrap-image{
+    width: 200px;
+    height: 200px;
+}
+
+.product-image{
+    display: block;
+    width: 100%;
+    object-fit: contain;
+}
+
+.product-update__action{
+    height: 40px;
+    padding-right: 20px;
+}
+
+.product-update__increase, .product-update__decrease{
+    width: 45px;
+}
+
+.product-update__increase, .product-update__decrease, #product-update__input-quantity{
+    height: 100%;
+}
+
+#product-update__input-quantity{
+    width: 60px;
+    margin: 0 5px;
+    padding: 0 0 0 10px;
+}
+
+#btnDelete{
+    top: 0;
+    right: 0;
+    border: none;
+    width: 35px;
+    font-size: 20px;
+    color: red;
+    font-weight: bold;
+}

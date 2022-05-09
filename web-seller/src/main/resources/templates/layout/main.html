@@ -1,31 +1,93 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
+
+
 <head>
-	<!-- <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">My website</title> -->
-	<title layout:title-pattern="$CONTENT_TITLE">My website</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;1,300&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/font/font-awesome-6/css/all.min.css}">
+	<!-- <link rel="stylesheet" href="css/style.css"> -->
+	<link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+	<link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 	<link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
+
+	<link rel="stylesheet"  th:href="@{/css/stylephong.css}">
+
+
+
+
 </head>
 
 <body>
-	<div class="root">
-		<div class="header">
-			<div th:replace="fragments/header:: header"></div>
-		</div>
-		<div class="wrap">
-			<div layout:fragment="content">
+	<div class="app">
+		<div th:replace="fragments/header :: header"></div>
 
-				rendering layout
-			</div>
+		<div layout:fragment="content">
+
 		</div>
+		<div th:replace="fragments/footer :: footerFragment"></div>
 	</div>
+
+
 	<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
 	<script th:src="@{/js/popper.min.js}"></script>
 	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/owl.carousel.min.js}"></script>
+	<script th:src="@{/js/index.js}"></script>
+	<script th:src="@{/js/sanphamprice.js}"></script>
+	<script th:src="@{/js/xzoom.min.js}"></script>
+	<script th:src="@{/js/foundation.min.js}"></script>
+	<script th:src="@{/js/setup.js}"></script>
+	<script>
+
+		const user = document.querySelector('.js-user');
+		const cart = document.querySelector('.js-cart');
+		const drop = document.querySelector('.dropdown__list');
+		const drops = drop.getElementsByTagName('li');
+		const layoutCart = document.querySelector('.container__center_cart');
+		const layoutUser = document.querySelectorAll('.container__center_user');
+		user.addEventListener('click', function () {
+			if (cart.classList.contains('active') && layoutCart.classList.contains('active-layout')) {
+				cart.classList.remove('active');
+				drops[0].classList.add('active');
+				drop.style.height = '70px';
+				layoutCart.classList.remove('active-layout');
+				layoutUser[0].classList.add('active-layout');
+			} else {
+				document.querySelector('.active').classList.remove('active');
+				drops[0].classList.add('active');
+				document.querySelector('.active-layout').classList.remove('active-layout');
+				layoutUser[0].classList.add('active-layout');
+			}
+		})
+		cart.addEventListener('click', function () {
+			if (!cart.classList.contains('active') && !layoutCart.classList.contains('active-layout')) {
+				document.querySelector('.active').classList.remove('active');
+				cart.classList.add('active');
+				drop.style.height = '0';
+				document.querySelector('.active-layout').classList.remove('active-layout');
+				layoutCart.classList.add('active-layout');
+			}
+		})
+		for (let index = 0; index < drops.length; index++) {
+			const element = drops[index];
+			element.addEventListener('click', function () {
+				if (element !== document.querySelector('.active')) {
+					document.querySelector('.active').classList.remove('active');
+					element.classList.add('active')
+					document.querySelector('.active-layout').classList.remove('active-layout');
+					layoutUser[index].classList.add('active-layout');
+				}
+			})
+		}
+	</script>
 </body>
 
 </html>

@@ -5,12 +5,110 @@ layout:decorate="~{layout/main}"
 >
     <head>
         <title>Trang chủ</title>
+
         
     </head>
 
     <body>
+        
         <div layout:fragment="content">
-            this is home page
+            <div th:replace="fragments/header :: sliderFragment"></div>
+            <div class="wrapper container">
+
+                <div class="img-icon-line text-center mt-5 mb-5">
+                    <h1 class="mb-4">Top Bán Chạy</h1>
+                    <img src="image/icon-line.png" alt="">
+                </div>
+    
+                <div class="owl-carousel owl-theme">
+                    <div class="item">
+                        <a href="/product_detail.html" id="item-1" class="sale__item-link">
+                            <div class="sale__wrap-img">
+                                <img src="/image/item/item_01.jpg" alt="" class="sale__img">
+                                <div class="sale__view">
+                                    <span>Xem chi tiết</span>
+                                </div>
+                            </div>
+                            <span class="sale__discript d-block">Xe đạp điện Osakar A9 New 2021
+                            </span>
+                            <span class="sale__price text-danger d-block">
+                                11.600.00<sup> ₫</sup></span>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="/product_detail.html" id="item-2" class="sale__item-link">
+                            <div class="sale__wrap-img">
+                                <img src="/image/item/item_02.jpg" alt="" class="sale__img">
+                                <div class="sale__view">
+                                    <span>Xem chi tiết</span>
+                                </div>
+                            </div>
+                            <span class="sale__discript d-block">Xe đạp điện Osakar A9 New 2021
+                            </span>
+                            <span class="sale__price text-danger d-block">
+                                11.600.00<sup> ₫</sup></span>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="/product_detail.html" id="item-3" class="sale__item-link">
+                            <div class="sale__wrap-img">
+                                <img src="/image/item/item_03.jpg" alt="" class="sale__img">
+                                <div class="sale__view">
+                                    <span>Xem chi tiết</span>
+                                </div>
+                            </div>
+                            <span class="sale__discript d-block">Xe đạp điện Osakar A9 New 2021
+                            </span>
+                            <span class="sale__price text-danger d-block">
+                                11.600.00<sup> ₫</sup></span>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="/product_detail.html" id="item-4" class="sale__item-link">
+                            <div class="sale__wrap-img">
+                                <img src="/image/item/item_04.jpg" alt="" class="sale__img">
+                                <div class="sale__view">
+                                    <span>Xem chi tiết</span>
+                                </div>
+                            </div>
+                            <span class="sale__discript d-block">Xe đạp điện Osakar A9 New 2021
+                            </span>
+                            <span class="sale__price text-danger d-block">
+                                11.600.00<sup> ₫</sup></span>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="/product_detail.html" id="item-5" class="sale__item-link">
+                            <div class="sale__wrap-img">
+                                <img src="/image/item/item_05.jpg" alt="" class="sale__img">
+                                <div class="sale__view">
+                                    <span>Xem chi tiết</span>
+                                </div>
+                            </div>
+                            <span class="sale__discript d-block">Xe đạp điện Osakar A9 New 2021
+                            </span>
+                            <span class="sale__price text-danger d-block">
+                                11.600.00<sup> ₫</sup></span>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="/product_detail.html" id="item-6" class="sale__item-link">
+                            <div class="sale__wrap-img">
+                                <img src="/image/item/item_06.jpg" alt="" class="sale__img">
+                                <div class="sale__view">
+                                    <span>Xem chi tiết</span>
+                                </div>
+                            </div>
+                            <span class="sale__discript d-block">Xe đạp điện Osakar A9 New 2021
+                            </span>
+                            <span class="sale__price text-danger d-block">
+                                11.600.00<sup> ₫</sup></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
+
+   
     </body>
 </html>

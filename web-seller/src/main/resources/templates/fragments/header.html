@@ -6,6 +6,177 @@
     </head>
 
     <body>
-        <div th:fragment="header">this is header</div>
+        <div th:fragment="header">
+            <header class="cotainer">
+                <div class="overlay-nav"></div>
+    
+                <div class="site-mobile-menu">
+                    <div class="site-mobile-menu-header">
+                        <div class="site-mobile-menu-close icon-close mt-3 js-menu-toggle">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                    </div>
+                    <div class="site-mobile-menu-body">
+                        <a href="/user-donhang" class="text-black text-decoration-none mx-3 position-relative d-flex">
+                            <div class="nav-icon-box position-absolute top-50 start-0 translate-middle">
+                                <i class="fa fa-user text-black-50"></i>
+                            </div>
+                            <div class="nav-text-box ms-4 ">
+                                <small class="text-black-50 d-block">Hello, Sign in</small>
+                                My Account
+                            </div>
+                        </a>
+    
+                        <a href="#" class="text-black text-decoration-none mx-3 position-relative d-flex">
+                            <div class="nav-icon-box position-absolute top-50 start-0 translate-middle">
+                                <i class="fa fa-cart-shopping text-black-50"></i>
+                            </div>
+                            <div class="nav-text-box ms-4 ">
+                                <small class="text-black-50 d-block">My cart</small>
+                                $265.00
+                            </div>
+                        </a>
+    
+                        <ul class="site-nav-wrap">
+                            <li><a href="/home">Trang chủ</a></li>
+                            <li class="">
+                                <a href="#" th:href="@{/products}">Sản Phẩm
+                                    <span class="arrow-collapse">
+                                        <i class="fa-solid fa-caret-down"></i>
+                                    </span>
+                                </a>
+                                <ul class="collapse">
+                                    <li><a href="/sanpham">Menu One</a></li>
+                                        <li><a href="/sanpham">Menu Two</a></li>
+                                        <li><a href="/sanpham">Menu Three</a></li>
+                                        <li><a href="/sanpham">Menu Four</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Về Chúng Tôi</a></li>
+                            <li><a href="#">Liên Hệ</a></li>
+                            <li><a href="#">Thông Tin</a></li>
+                        </ul>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <div class="logout">Logout</div>
+                    </div>
+                </div>
+    
+                <div class="site-navbar">
+    
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <div class="col-3 col-xl-2 p-0 d-flex justify-content-center">
+                            <a href="/home">
+                                <img class="site-logo mb-0" th:src="@{/image/login.png}" alt="logo">
+                            </a>
+                        </div>
+    
+                        <div class="col-7 col-xl-7 nav-search position-relative p-0">
+                            <button
+                                class="btn btn-search position-absolute end-0 bottom-0 h-100 d-flex justify-content-center align-items-center">
+                                <i class="nav-icon-search fa fa-search"></i>
+                            </button>
+                            <input type="text" class="form-control nav-input-search pe-5" placeholder="Search..."
+                                autocomplete="on">
+                        </div>
+                        <div class="col-3 col-xl-3 d-none d-xl-flex">
+                            <a href="/user-donhang" class="text-black text-decoration-none mx-3 position-relative d-flex">
+                                <div class="nav-icon-box position-absolute top-50 start-0 translate-middle">
+                                    <i class="fa fa-user text-black-50"></i>
+                                </div>
+                                <div class="nav-text-box ms-4 ">
+                                    <small class="text-black-50 d-block">Hello, Sign in</small>
+                                    My Account
+                                </div>
+                            </a>
+    
+                            <a href="#" class="text-black text-decoration-none mx-3 position-relative d-flex">
+                                <div class="nav-icon-box position-absolute top-50 start-0 translate-middle">
+                                    <i class="fa fa-cart-shopping text-black-50"></i>
+                                </div>
+                                <div class="nav-text-box ms-4 ">
+                                    <small class="text-black-50 d-block">My cart</small>
+                                    $265.00
+                                </div>
+                            </a>
+                        </div>
+    
+                        <div class="col-2 d-inline-block d-xl-none ml-md-0 "
+                            style="position: relative; text-align: center; font-size: 23px;">
+                            <a href="#" class="site-menu-toggle js-menu-toggle text-white">
+                                <i class="fa-solid fa-bars"></i>
+                            </a>
+                        </div>
+    
+                    </div>
+    
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col-12 col-md-10 d-none d-xl-block">
+                            <nav>
+                                <ul class="site-menu d-flex justify-content-center align-items-center">
+                                    <li><a href="/home">Trang chủ</a></li>
+                                    <li class="has-children ">
+                                        <a th:href="@{/products}">Sản Phẩm
+                                            <span class="arrow-collapse">
+                                                <i class="fa-solid fa-caret-down"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="dropdown-product__list arrow-top" th:each="catergory, iStat : ${catergories}">
+                                            <li><a th:href="@{/products(catergoryId = ${catergory.id})}" th:text="${catergory.name}">Menu One</a></li>
+                                        
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Về Chúng Tôi</a></li>
+                                    <li><a href="#">Liên Hệ</a></li>
+                                    <li><a href="#">Thông Tin</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+    
+                    </div>
+    
+                </div>
+            </header>
+        </div>
+        
+            <!-- Start Slider-->
+        <div th:fragment="sliderFragment" id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <!-- <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+                    aria-label="Slide 3"></button> -->
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img th:src="@{/image/slider/banner-01.jpg}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img th:src="@{/image/slider/banner_02.jpg}" class="d-block w-100" alt="...">
+                </div>
+                <!-- <div class="carousel-item">
+                    <img src="./images/slider/banner_03.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="./images/slider/banner_04.jpg" class="d-block w-100" alt="...">
+                </div> -->
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <!--End Slider-->
+        
     </body>
 </html>

@@ -8,11 +8,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
+import java.util.stream.IntStream;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,7 +47,7 @@ import com.nhom11.webseller.service.StorageService;
 import groovyjarjarpicocli.CommandLine.Parameters;
 
 @Controller
-@RequestMapping("admin/products")
+@RequestMapping("products")
 public class ProductController {
 
 	@Autowired
@@ -77,7 +82,7 @@ public class ProductController {
 		}).collect(Collectors.toList());
 	}
 
-	@GetMapping("/addForm")
+	@GetMapping("/admin/addForm")
 	public String showFormAddProduct(Model model) {
 		ProductRequest product = new ProductRequest();
 		product.setEdit(false);
@@ -89,7 +94,7 @@ public class ProductController {
 		return "admin/product/add-product";
 	}
 
-	@GetMapping("/edit/{id}")
+	@GetMapping("/admin/edit/{id}")
 	public ModelAndView showFormEdit(ModelMap model, @PathVariable long id) {
 		Optional<Product> productO = productService.findById(id);
 		Product product = productO.get();
@@ -106,13 +111,13 @@ public class ProductController {
 
 			list.add(optionRequest);
 		}
-		
+
 		productRequest.setOptionRequests(list);
 		model.addAttribute("product", productRequest);
 		return new ModelAndView("/admin/product/add-product", model);
 	}
 
-	@GetMapping("/delete/{id}")
+	@GetMapping("/admin/delete/{id}")
 	public String deleteProduct(@PathVariable long id) {
 		Product p = new Product();
 		p.setId(id);
@@ -120,7 +125,7 @@ public class ProductController {
 		pOptionService.deleteProductOptionByProductID(id);
 		productService.delete(p);
 
-		return "redirect:/admin/products";
+		return "redirect:/products/admin";
 	}
 
 	@GetMapping("/images/{filename:.+}")
@@ -132,14 +137,14 @@ public class ProductController {
 				.body(file);
 	}
 
-	@GetMapping
+	@GetMapping("/admin")
 	public String list(ModelMap model) {
 		List<Product> list = productService.findAll();
 		model.addAttribute("products", list);
 		return "admin/product/list-product";
 	}
 
-	@PostMapping("/add")
+	@PostMapping("/admin/add")
 	public ModelAndView addProduct(ModelMap model, @ModelAttribute(name = "product") ProductRequest productRequest,
 			BindingResult bindingResult) {
 
@@ -232,7 +237,77 @@ public class ProductController {
 			pOptionService.save(option);
 		}
 
-		return new ModelAndView("redirect:/admin/products");
+		return new ModelAndView("redirect:/products/admin");
+	}
+
+
+	@GetMapping({"/", ""})
+	public String showProduct(Model model, 
+			@RequestParam(name = "catergoryId", required = false) Optional<Long> catergoryId, 
+			@RequestParam(name = "page", required = false) Optional<Integer> page,  
+			@RequestParam(name = "size", required = false) Optional<Integer> size,
+			@RequestParam(name = "sort", required = false) Optional<String> sort
+			){
+		
+		int currentPage = page.orElse(1);
+		int pageSize = size.orElse(5);
+		long cId = catergoryId.orElse((long) 0);
+		String sortType = null;
+		String sortBy = "name";
+		Pageable pageable = PageRequest.of(currentPage -1, pageSize, Sort.by(sortBy));
+		if(sort.isPresent()) {
+			String[] temp = sort.get().split("\\.");
+			sortBy = temp[0];
+			sortType = temp[1];
+			System.out.println("SORT TYPE: "+ sortType);
+			switch (sortType) {
+			case "DESC":
+				pageable = PageRequest.of(currentPage -1, pageSize, Sort.by(sortBy).descending());
+				break;
+
+			default:
+				pageable = PageRequest.of(currentPage -1, pageSize, Sort.by(sortBy));
+				break;
+			}
+		}
+		
+
+		
+		Page<Product> resultPage = null;
+		
+		if(cId!=0) {
+			resultPage = productService.findByCatergoryId( cId, pageable);
+		}else {
+			resultPage = productService.findAll(pageable);
+		}
+		System.out.println(resultPage.getNumber());
+		int totalPages = resultPage.getTotalPages();
+		if(totalPages > 0){
+			int start = Math.max(1, currentPage-2);
+			int end = Math.min(currentPage + 2, totalPages);
+
+			if(totalPages > 5){
+				if(end == totalPages) start = end -5;
+				else if(start == 1) end = start + 5;
+			}
+			List<Integer> pageNumbers = IntStream.rangeClosed(start, end)
+												.boxed()
+												.collect(Collectors.toList());
+			model.addAttribute("pageNumbers", pageNumbers);
+			model.addAttribute("catergoryId", cId);
+		}	
+		model.addAttribute("productPage", resultPage);
+		
+		return "sanpham";
+	}
+	
+	@GetMapping("/{id}")
+	public String showProduct(@PathVariable long id, Model model) {
+		Optional<Product> p = productService.findById(id);
+		if(p.isPresent()) {
+			model.addAttribute("product", p);
+		}
+		return "ct-sanpham";
 	}
 
 }
