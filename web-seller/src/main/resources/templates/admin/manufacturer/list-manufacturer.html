@@ -28,19 +28,20 @@
 
                         <!-- Modal body -->
                         <div class="modal-body d-flex justify-content-center align-items-center">
-                            <form th:action="@{/admin/manufacturers/save}" method="post" th:object="${manufacturer}"
+                            <form th:action="@{/admin/manufacturers/save}" method="post" th:object="${manufacturerAdd}"
                                 class="form w-100 mt-3 d-flex flex-column justify-content-center align-items-center"
                                 enctype="multipart/form-data">
                                 <div class="mb-3" style="width: 100%;">
                                     <label for="" class="form-label">Tên nhà sản xuất</label>
-                                    <input type="text" class="form-control" id="name" aria-describedby="nameError"
-                                        th:field="*{name}">
+                                    <input type="text" class="form-control" name="name"  aria-describedby="nameError"
+                                    th:field="*{name}"  >
                                     <!-- <div id="nameError" class="form-text"></div> -->
                                 </div>
                                 <div class="mb-3" style="width: 100%;">
                                     <label for="" class="form-label">Quốc gia</label>
-                                    <input type="text" class="form-control" id="country" aria-describedby="countryError"
-                                        th:field="*{country}">
+                                    <input type="text" class="form-control"  name="country" aria-describedby="nameError"
+                                    th:field="*{country}" 
+                                    >
                                     <!-- <div id="countryError" class="form-text"></div> -->
                                 </div>
                                 <div class="w-50 align-self-center">
@@ -61,7 +62,8 @@
 
         
 
-
+            
+                <!-- search -->
             <div class="row" style=" margin-top: 10px; margin-bottom:10px; padding-right: 15px;">
                 <div class="col-md-12">
                     <form method="get" action="#" th:action="@{/admin/manufacturers/search}">
@@ -74,7 +76,7 @@
                               </button>
                         </div> -->
                         <div class="row" style="margin-top: 10px; margin-bottom:10px ;padding-left:10px">
-                            <input type="text" class="form-control nav-input-search" name="name" id="name"
+                            <input type="text" class="form-control nav-input-search" name="nameSearch" 
                                 placeholder="Tìm theo tên..." autocomplete="on">
 
                         </div>
@@ -83,6 +85,8 @@
                 </div>
 
             </div>
+            <!-- end search -->
+            
 
 
 
@@ -98,11 +102,11 @@
                 <tbody>
                     <tr th:each=" manufacturer : ${manufacturers}">
                         <td hidden th:text="${manufacturer.id}"></td>
-                        <td id="name"  th:text="${manufacturer.name}"></td>
-                        <td id="country"  th:text="${manufacturer.country}"></td>
+                        <td id="nameTB"  th:text="${manufacturer.name}"></td>
+                        <td id="countryTB"  th:text="${manufacturer.country}"></td>
                         <td> 
                             <!-- <a th:href="@{'/admin/manufacturers/update/'+${manufacturer.id}}"  data-bs-toggle="modal" data-bs-target="#modalUpdate"> -->
-                            <a th:id="${manufacturer.id}" onclick="modalHandler(this)"  data-bs-toggle="modal" data-bs-target="#modalUpdate">
+                            <a th:id="${manufacturer.id}" onclick="modalHandler(this)"   data-bs-toggle="modal" data-bs-target="#modalUpdate">
                             <i class="bi text-success bi-pencil-square text-center"></i>
                             </a>
                             <a th:href="@{'/admin/manufacturers/delete/'+${manufacturer.id}}"><i
@@ -126,19 +130,19 @@
 
                         <!-- Modal body -->
                         <div class="modal-body d-flex justify-content-center align-items-center">
-                            <form th:action="@{/admin/manufacturers/update}" method="post" th:object="${manufacturer}"
+                            <form th:action="@{/admin/manufacturers/update}" method="post" th:object="${manufacturerAdd}"
                                 class="form w-100 mt-3 d-flex flex-column justify-content-center align-items-center"
                                 enctype="multipart/form-data">
                                 <input hidden type="text" class="form-control text-edit-id" th:field="*{id}">
                                 <div class="mb-3" style="width: 100%;">
                                     <label for="" class="form-label">Tên nhà sản xuất</label>
-                                    <input type="text" class="form-control text-edit-name" id="name" aria-describedby="nameError"
+                                    <input type="text" class="form-control text-edit-name" id="nameTB" aria-describedby="nameError"
                                         th:field="*{name}">
                                     <!-- <div id="nameError" class="form-text"></div> -->
                                 </div>
                                 <div class="mb-3" style="width: 100%;">
                                     <label for="" class="form-label">Quốc gia</label>
-                                    <input type="text" class="form-control text-edit-country" id="country" aria-describedby="countryError"
+                                    <input type="text" class="form-control text-edit-country" id="countryTB" aria-describedby="countryError"
                                         th:field="*{country}">
                                     <!-- <div id="countryError" class="form-text"></div> -->
                                 </div>
@@ -159,8 +163,8 @@
                     function modalHandler(target){
                         var id = target.getAttribute("id");
                         var trElement = target.parentElement.parentElement;
-                        var name = trElement.querySelector("#name");
-                        var country = trElement.querySelector("#country");
+                        var name = trElement.querySelector("#nameTB");
+                        var country = trElement.querySelector("#countryTB");
                         
 
                         document.querySelector(".text-edit-id").value = id;

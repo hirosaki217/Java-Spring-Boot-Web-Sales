@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.codehaus.groovy.util.StringUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -41,41 +42,42 @@ public class ManufacturerController {
 	private StorageService storageService;
 
 	@GetMapping
-    public String getManufacturers(ModelMap model){
+    public String getManufacturers(ModelMap model) {
 		List<Manufacturer> list = manufacturerService.findAll();
 		model.addAttribute("manufacturers",list);
 		ManufacturerDto dto = new ManufacturerDto();
-		model.addAttribute("manufacturer",dto);
+		model.addAttribute("manufacturerAdd",dto);
     	return "admin/manufacturer/list-manufacturer";
-    }
-	@GetMapping("/addForm")
-    public String showFormAddManufacturer(Model model){
-		ManufacturerDto dto = new ManufacturerDto();
-    	model.addAttribute("manufacturer", dto);
-    	
-        return "admin/manufacturer/add-manufacturer";
-    }
-	@GetMapping("/updateForm")
-    public String showFormUpdateManufacturer(Model model){
-		ManufacturerDto dto = new ManufacturerDto();
-    	model.addAttribute("manufacturer", dto);
-    	
-        return "admin/manufacturer/update-manufacturer";
-    }
-	@GetMapping("/update/{id}")
-	public ModelAndView updateManufacturer(ModelMap model, @PathVariable("id") Long id) {
-		Optional<Manufacturer> op = manufacturerService.findById(id);
-		ManufacturerDto dto = new ManufacturerDto();
-		if(op.isPresent()) {
-			Manufacturer entity = op.get();
-			BeanUtils.copyProperties(entity, dto);
-			model.addAttribute("manufacturer",dto);
-			return new ModelAndView("admin/manufacturer/update-manufacturer");
-		}
-		model.addAttribute("message","Manufacturer not exist");
 		
-		return new ModelAndView("forward:/admin/manufacturers",model);
-	}
+    }
+	// @GetMapping("/addForm")
+    // public String showFormAddManufacturer(Model model){
+	// 	ManufacturerDto dto = new ManufacturerDto();
+    // 	model.addAttribute("manufacturer", dto);
+    	
+    //     return "admin/manufacturer/add-manufacturer";
+    // }
+	// @GetMapping("/updateForm")
+    // public String showFormUpdateManufacturer(Model model){
+	// 	ManufacturerDto dto = new ManufacturerDto();
+    // 	model.addAttribute("manufacturer", dto);
+    	
+    //     return "admin/manufacturer/list-manufacturer";
+    // }
+	// @GetMapping("/update/{id}")
+	// public ModelAndView updateManufacturer(ModelMap model, @PathVariable("id") Long id) {
+	// 	Optional<Manufacturer> op = manufacturerService.findById(id);
+	// 	ManufacturerDto dto = new ManufacturerDto();
+	// 	if(op.isPresent()) {
+	// 		Manufacturer entity = op.get();
+	// 		BeanUtils.copyProperties(entity, dto);
+	// 		model.addAttribute("manufacturer",dto);
+	// 		return new ModelAndView("admin/manufacturer/update-manufacturer");
+	// 	}
+	// 	model.addAttribute("message","Manufacturer not exist");
+		
+	// 	return new ModelAndView("forward:/admin/manufacturers",model);
+	// }
 
 
 	@PostMapping("/save")
@@ -96,22 +98,26 @@ public class ManufacturerController {
 		manufacturer.setId(dto.getId());
 		BeanUtils.copyProperties(dto, manufacturer);
 		
-		manufacturerService.save(manufacturer);
+		System.out.println(manufacturer);
+
+		manufacturerService.save(manufacturer); 
     	
         return new ModelAndView("redirect:/admin/manufacturers",model) ;
     }
 	@GetMapping("/search")
-	public String findByName(Model model, @RequestParam(name="name",required=false) String name) {
+	public String findByName(ModelMap model, @RequestParam(name="nameSearch",required=false) String name) {
 		List<Manufacturer> list =null;
 		System.out.println("SEARCH: "+name);
 		if(StringUtils.hasText(name)) {
 			list = manufacturerService.findByNameContaining(name);
+			System.out.println("List" + list.toString());
 		}
 		else {
 			list = manufacturerService.findAll();
 			
 		}
 		model.addAttribute("manufacturers",list);
+		model.addAttribute("manufacturerAdd",new ManufacturerDto());
 		return "admin/manufacturer/list-manufacturer";
 	}
 	@GetMapping("delete/{id}")
@@ -120,5 +126,6 @@ public class ManufacturerController {
 		model.addAttribute("message","Manufacturer is deleted");
 		return new ModelAndView("redirect:/admin/manufacturers",model);
 	}
+
 	
 }

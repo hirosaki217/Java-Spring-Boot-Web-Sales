@@ -12,37 +12,32 @@
     <div layout:fragment="content">
         <div class="container">
             <div class="back" style="padding-top: 1.75em;">
-                <a href="/index.html">Trang chủ</a> / <a href="#">Sản Phẩm</a> / Xe đạp điện gấp Homesheel AIRWHEEL E3
+                <a href="/index.html">Trang chủ</a> / <a href="#">Sản Phẩm</a> / <span th:text="${product.name}"></span>
             </div>
             <h1 class="text-center pt-3 pb-2">Thông tin sản phẩm</h1>
             <span
                 style="width: 20%; content: ''; border-bottom: 3px solid black; position: absolute; left: 40%;"></span>
             <div class="row mt-5 mb-4">
                 <div class="col col-12 col-md-5 wrapImage p-0">
-                    <div class="xzoom-container">
-                        <img class="xzoom " id="xzoom-default" th:src="@{/image/products/product_01.jpg}"
-                            xoriginal="/image/products/product_01.jpg" style="width: 100%;">
-                        <!-- <div class="xzoom-thumbs mt-3">
-                                <a href="images/products/product_01.jpg">
-                                    <img class="xzoom-gallery xactive" width="80" src="images/products/product_01.jpg"
-                                        xpreview="images/products/product_01.jpg">
-                                </a>
-                                <a href="images/products/product_02.jpg">
-                                    <img class="xzoom-gallery" width="80" src="images/products/product_02.jpg">
-                                </a>
-                                <a href="images/products/product_03.jpg">
-                                    <img class="xzoom-gallery" width="80" src="images/products/product_03.jpg">
-                                </a>
-                                <a href="images/products/product_04.jpg">
-                                    <img class="xzoom-gallery" width="80" src="images/products/product_04.jpg">
-                                </a>
-                            </div> -->
+                    <div>
+                        <img id="imageShow"
+                            th:src="@{'/products/images/'+ ${product.productOptions[0].image}}" style="width: 100%;">
+                        <div class="mt-3 d-flex">
+                            <div  th:if="${product}"
+                                th:each="productOption, iStat : ${product.productOptions}">
+                                <span>
+                                    <img onclick="imageClickHandler(this)" th:id="${productOption.id}" th:price="${productOption.price}"  class="xzoom-gallery xactive" width="80px"
+                                        th:src="@{'/products/images/'+ ${productOption.image}}">
+                                </span>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col col-12 col-md-7 wrapImage p-0">
-                    <h3> Xe đạp điện gấp Homesheel AIRWHEEL E3</h3>
+                    <h3 th:text="${product.name}"> Xe đạp điện gấp Homesheel AIRWHEEL E3</h3>
                     <span class="price_min mt-3">
-                        Giá:<span class="price">13,600,000₫</span>
+                        Giá:<span class="price" th:text="${product.price} + ' đ'">13,600,000₫</span>
                     </span>
                     <div class="quantity buttons_added mt-3">
                         <span>Số lượng: </span>
@@ -51,7 +46,8 @@
                             class="input-text qty text" size="4">
                         <input type="button" value="+" class="qtyControl plus">
                     </div>
-                    <p class="note">Trọng lượng: 12500gram</p>
+                   
+                    <!-- <p class="note">Trọng lượng: 12500gram</p> -->
                     <div class="row">
                         <button type="submit" class="styleBtnAdd">
                             <span> Mua ngay</span>
@@ -61,24 +57,66 @@
                             <i class="fa-solid fa-cart-shopping"></i> <span class="ms-2"> Thêm vào giỏ hàng </span>
                         </button>
                     </div>
-                    <h5 class="mt-3" style="color: #ff0000;">Chi tiết sản phẩm</h5>
-                    <p class="ms-3">
+
+                    <!-- <p class="ms-3">
                         Đối với các sản phẩm xe đạp, chúng tôi chỉ hỗ trợ giao lắp ráp sẵn trong khu vực Hồ Chí Minh, Hà
                         Nội, đối với khu vực tỉnh chúng tôi giao hàng nguyên đai nguyên kiện.
                     </p>
                     <p class="ms-3">
                         Để biết thêm thông tin chi tiết, quý khách vui lòng liên hệ qua hotline của AeonEshop: 1900 9097
                         để
-                        được hỗ trợ.</p>
+                        được hỗ trợ.</p> -->
+
+                    <!-- thong tin chi tiet -->
+                    <div class="bao-info-product"
+                        style="border:2px solid #00a550; border-radius: 15px; margin-top:20px">
+                        <div class=""
+                            style=" background-color:#00a550; border-radius:15px 15px 0% 0%;padding:7px 0px 7px 0px">
+                            <h5 style="color: white; padding-left: 15px; margin-bottom: 0;">Chi tiết sản phẩm</h5>
+                        </div>
+                        <div style="padding-left: 15px; margin-top: 10px;">
+
+                            <p>Chiều dài x rộng x cao:
+                                <span name="dai" th:text="${product.length} + 'mm x'"></span>
+                                <span name="rong" th:text="${product.width} + 'mm x'"></span>
+                                <span name="cao" th:text="${product.height} + 'mm'"></span>
+                            </p>
+                            <p>Trọng lượng:
+                                <span name="trongluong" th:text="${product.weight} + 'kg'"></span>
+                            </p>
+                            <p>Tải trọng:
+                                <span name="taitrong" th:text="${product.maximumLoad} + 'kg'"></span>
+                            </p>
+                            <p>Acquy:
+                                <span name="acquy" th:text="${product.battery} +'v'"></span>
+                            </p>
+                            <p>Vận tốc tối đa:
+                                <span name="vantocMinMax" th:text="${product.minimumMaximumSpeed} + 'km/h -'"></span>
+
+                                <span name="vantocMaxMax" th:text="${product.maximumMaximumSpeed} + 'km/h'"></span>
+                            </p>
+                            <p>Quảng đường di chuyển:
+                                <span name="quanduongMin" th:text="${product.distanceMin} + 'km/h -'"></span>
+                                <span name="quanduongMax" th:text="${product.distanceMax} + 'km/h / 1 lần sạc'"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- end thong tin chi tiet -->
+
                 </div>
             </div>
 
             <div class="row mb-4">
 
             </div>
-            
+
         </div>
         <script>
+            var  imageClickHandler = function(tgt){
+                var img = document.querySelector(".price").innerText = tgt.getAttribute("price") +" đ";
+                document.querySelector("#imageShow").src = tgt.src;
+            }
+
             const btnQuantity = document.querySelectorAll('.qtyControl');
             var quantity = document.getElementById('pdQuantity');
             btnQuantity.forEach(element => {
@@ -99,7 +137,7 @@
         <script th:src="@{js/setup.js}"></script>
         
         <script th:src="@{js/owl.carousel.min.js}"></script> -->
-        
+
     </div>
 </body>
 

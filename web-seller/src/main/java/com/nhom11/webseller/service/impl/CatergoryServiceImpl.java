@@ -132,6 +132,12 @@ public class CatergoryServiceImpl implements CatergoryService{
 		return catergoryRepository.getById(id);
 	}
 
+	@Override
+	public List<Catergory> findByNameContaining(String name) {
+		name = name.trim();
+		return catergoryRepository.findByNameContaining(name);
+	}
+
 
 	
 }

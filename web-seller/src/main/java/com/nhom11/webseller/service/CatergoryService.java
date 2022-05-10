@@ -57,5 +57,5 @@ public interface CatergoryService {
 	<S extends Catergory> S save(S entity);
 
 	List<Catergory> findAll();
-
+	List<Catergory> findByNameContaining(String name);
 }

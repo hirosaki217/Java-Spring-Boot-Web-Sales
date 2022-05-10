@@ -305,7 +305,11 @@ public class ProductController {
 	public String showProduct(@PathVariable long id, Model model) {
 		Optional<Product> p = productService.findById(id);
 		if(p.isPresent()) {
-			model.addAttribute("product", p);
+			Product product = p.get();
+			
+			model.addAttribute("product", product);
+			
+			
 		}
 		return "ct-sanpham";
 	}
