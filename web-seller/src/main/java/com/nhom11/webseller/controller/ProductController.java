@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.util.StringUtils;
 import com.nhom11.webseller.dto.ProductOptionRequest;
 import com.nhom11.webseller.dto.ProductRequest;
 import com.nhom11.webseller.model.Catergory;
@@ -243,6 +243,7 @@ public class ProductController {
 
 	@GetMapping({"/", ""})
 	public String showProduct(Model model, 
+			@RequestParam(name="nameSearch",required=false) String name,
 			@RequestParam(name = "catergoryId", required = false) Optional<Long> catergoryId, 
 			@RequestParam(name = "page", required = false) Optional<Integer> page,  
 			@RequestParam(name = "size", required = false) Optional<Integer> size,
@@ -255,7 +256,7 @@ public class ProductController {
 		String sortType = null;
 		String sortBy = "name";
 		Pageable pageable = PageRequest.of(currentPage -1, pageSize, Sort.by(sortBy));
-		if(sort.isPresent()) {
+		if(sort.isPresent() && !sort.get().equals(sortBy)) {
 			String[] temp = sort.get().split("\\.");
 			sortBy = temp[0];
 			sortType = temp[1];
@@ -278,9 +279,17 @@ public class ProductController {
 		if(cId!=0) {
 			resultPage = productService.findByCatergoryId( cId, pageable);
 		}else {
-			resultPage = productService.findAll(pageable);
+
+			if(name == null) {
+				resultPage = null;
+				resultPage = productService.findAll(pageable);
+			}
+			else{
+				resultPage = null;
+				resultPage = productService.findAllByName(name, pageable);
+			}
 		}
-		System.out.println(resultPage.getNumber());
+		System.out.println("PAGE NUMBER" + resultPage.getNumber());
 		int totalPages = resultPage.getTotalPages();
 		if(totalPages > 0){
 			int start = Math.max(1, currentPage-2);
@@ -296,8 +305,11 @@ public class ProductController {
 			model.addAttribute("pageNumbers", pageNumbers);
 			model.addAttribute("catergoryId", cId);
 		}	
-		model.addAttribute("productPage", resultPage);
 		
+		model.addAttribute("nameSearch",name);
+		model.addAttribute("productPage", resultPage);
+		String s = sort.isEmpty() ? "name" : sort.get();
+		model.addAttribute("sort", s);
 		return "sanpham";
 	}
 	
@@ -313,5 +325,72 @@ public class ProductController {
 		}
 		return "ct-sanpham";
 	}
+
+
+	// @GetMapping("/search")
+	// public String findByName(@RequestParam(name="nameSearch",required=false) String name, ModelMap model,
+	// 		@RequestParam(name = "catergoryId", required = false) Optional<Long> catergoryId, 
+	// 		@RequestParam(name = "page", required = false) Optional<Integer> page,  
+	// 		@RequestParam(name = "size", required = false) Optional<Integer> size,
+	// 		@RequestParam(name = "sort", required = false) Optional<String> sort
+	// 		){
+		
+
+	// 			System.out.println("NAME"+name);
+
+
+	// 	int currentPage = page.orElse(1);
+	// 	int pageSize = size.orElse(5);
+	// 	long cId = catergoryId.orElse((long) 0);
+	// 	String sortType = null;
+	// 	String sortBy = "name";
+	// 	Pageable pageable = PageRequest.of(currentPage -1, pageSize, Sort.by(sortBy));
+	// 	if(sort.isPresent()) {
+	// 		String[] temp = sort.get().split("\\.");
+	// 		sortBy = temp[0];
+	// 		sortType = temp[1];
+	// 		System.out.println("SORT TYPE: "+ sortType);
+	// 		switch (sortType) {
+	// 		case "DESC":
+	// 			pageable = PageRequest.of(currentPage -1, pageSize, Sort.by(sortBy).descending());
+	// 			break;
+
+	// 		default:
+	// 			pageable = PageRequest.of(currentPage -1, pageSize, Sort.by(sortBy));
+	// 			break;
+	// 		}
+	// 	}
+		
+
+		
+	// 	Page<Product> resultPage = null;
+		
+	// 	if(cId!=0) {
+	// 		resultPage = productService.findByCatergoryId( cId, pageable);
+	// 	}else {
+	// 		resultPage = productService.findAllByName(name, pageable);
+	// 	}
+	// 	System.out.println(resultPage.getNumber());
+	// 	int totalPages = resultPage.getTotalPages();
+	// 	if(totalPages > 0){
+	// 		int start = Math.max(1, currentPage-2);
+	// 		int end = Math.min(currentPage + 2, totalPages);
+
+	// 		if(totalPages > 5){
+	// 			if(end == totalPages) start = end -5;
+	// 			else if(start == 1) end = start + 5;
+	// 		}
+	// 		List<Integer> pageNumbers = IntStream.rangeClosed(start, end)
+	// 											.boxed()
+	// 											.collect(Collectors.toList());
+	// 		model.addAttribute("pageNumbers", pageNumbers);
+	// 		model.addAttribute("catergoryId", cId);
+	// 	}	
+	// 	model.addAttribute("productPage", resultPage);
+		
+	// 	System.out.println(productService.findAllByName(name, pageable).toString());
+
+	// 	return "sanpham";
+	// }
 
 }

@@ -111,7 +111,11 @@ public class ProductServiceImpl implements ProductService{
 		return productRepository.findAll(example, sort);
 	}
 
-
+	@Override
+	public Page<Product> findAllByName(String name, Pageable pageable) {
+		return productRepository.findAllByName(name, pageable);
+	}
+	
 
 
 	

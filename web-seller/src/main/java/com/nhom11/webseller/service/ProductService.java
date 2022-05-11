@@ -51,6 +51,7 @@ public interface ProductService {
 	<S extends Product> S save(S entity);
 
 	Page<Product> findByCatergoryId(long catergoryId, Pageable pageable);
+	Page<Product> findAllByName(String name, Pageable pageable);
 
 	
 }

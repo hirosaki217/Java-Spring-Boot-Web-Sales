@@ -76,8 +76,14 @@
                                 class="btn btn-search position-absolute end-0 bottom-0 h-100 d-flex justify-content-center align-items-center">
                                 <i class="nav-icon-search fa fa-search"></i>
                             </button>
-                            <input type="text" class="form-control nav-input-search pe-5" placeholder="Search..."
-                                autocomplete="on">
+
+                            <form method="get" action="#" th:action="@{/products}">
+                                    <input type="text" class="form-control nav-input-search" name="nameSearch" 
+                                        placeholder="Tìm theo tên..." autocomplete="on">
+                            </form>
+
+                            <!-- <input type="text" class="form-control nav-input-search pe-5" placeholder="Search..."
+                                autocomplete="on"> -->
                         </div>
                         <div class="col-3 col-xl-3 d-none d-xl-flex">
                             <a href="/user-donhang" class="text-black text-decoration-none mx-3 position-relative d-flex">
@@ -121,8 +127,8 @@
                                                 <i class="fa-solid fa-caret-down"></i>
                                             </span>
                                         </a>
-                                        <ul class="dropdown-product__list arrow-top" th:each="catergory, iStat : ${catergories}">
-                                            <li><a th:href="@{/products(catergoryId = ${catergory.id})}" th:text="${catergory.name}">Menu One</a></li>
+                                        <ul class="dropdown-product__list arrow-top">
+                                            <li th:each="catergory, iStat : ${catergories}"><a th:href="@{/products(catergoryId = ${catergory.id})}" th:text="${catergory.name}">Menu One</a></li>
                                         
                                         </ul>
                                     </li>

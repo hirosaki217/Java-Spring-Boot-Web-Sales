@@ -1,14 +1,23 @@
 package com.nhom11.webseller.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +29,7 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User implements Serializable{
 	@Id
 	@Column(columnDefinition = "varchar(50)", nullable = false)
 	private String username;
@@ -52,11 +61,19 @@ public class User {
 	private String image;
 
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
-	private List<Authority> authorities;
+	// @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	// @EqualsAndHashCode.Exclude
+	// @ToString.Exclude
+	// private List<Authority> authorities;
 
+    @Transient
+    private String passwordConfirm;
+	
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "username"))
+    @Column(name = "authority")
+	private Set<Authority> authorities;
+	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude

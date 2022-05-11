@@ -3,6 +3,7 @@ package com.nhom11.webseller.dto;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -18,17 +19,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRequest implements Serializable{
+public class UserDto implements Serializable{
 
-    @NotEmpty(message = "Tên Đăng Nhập Không Được Để Trống")
-	@Size(min = 4, message = "Tên Đăng Nhập Dài Hơn Hoặc Bằng 6 Ký Tự")
+//    @NotEmpty(message = "Tên Đăng Nhập Không Được Để Trống")
+//	@Size(min = 4, message = "Tên Đăng Nhập Dài Hơn Hoặc Bằng 6 Ký Tự")
 	private String username;
 
-    @NotEmpty(message = "Mật Khẩu Không Được Để Trống")
-	@Size(min = 4, message = "Mật Khẩu Dài Hơn Hoặc Bằng 8 Ký Tự")
+//    @NotEmpty(message = "Mật Khẩu Không Được Để Trống")
+//	@Size(min = 4, message = "Mật Khẩu Dài Hơn Hoặc Bằng 8 Ký Tự")
 	private String password;
 
-	private boolean enabled;
+	private boolean enabled =true;
 
 	private String firstName;
 
@@ -39,10 +40,15 @@ public class UserRequest implements Serializable{
 	private String email;
 
 	private String mobile;
-
+	
+	private String passwordConfirm;
+	
+	private Set<Authority> authorities; 
+	
 	private Date registeredAt;
 
     private MultipartFile imageFile;
 	private String image;
 
+	private int role;
 }

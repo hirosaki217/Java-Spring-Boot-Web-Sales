@@ -21,10 +21,10 @@ layout:decorate="~{layout/main}"
                 </div>
     
                 <div class="owl-carousel owl-theme">
-                    <div class="item">
-                        <a href="/product_detail.html" id="item-1" class="sale__item-link">
+                    <div class="item" th:each="product : ${products}">
+                        <a  href="/product_detail.html" id="item-1" class="sale__item-link">
                             <div class="sale__wrap-img">
-                                <img src="/image/item/item_01.jpg" alt="" class="sale__img">
+                                <img th:src="${'/images/'+ product.productOptions[0].image}" src="/image/item/item_01.jpg" alt="" class="sale__img">
                                 <div class="sale__view">
                                     <span>Xem chi tiết</span>
                                 </div>
@@ -35,7 +35,7 @@ layout:decorate="~{layout/main}"
                                 11.600.00<sup> ₫</sup></span>
                         </a>
                     </div>
-                    <div class="item">
+                    <!-- <div class="item">
                         <a href="/product_detail.html" id="item-2" class="sale__item-link">
                             <div class="sale__wrap-img">
                                 <img src="/image/item/item_02.jpg" alt="" class="sale__img">
@@ -104,7 +104,7 @@ layout:decorate="~{layout/main}"
                             <span class="sale__price text-danger d-block">
                                 11.600.00<sup> ₫</sup></span>
                         </a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

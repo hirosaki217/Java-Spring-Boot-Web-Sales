@@ -4,10 +4,8 @@
 
 <head>
     <title>Sản phẩm</title>
-    <link rel="stylesheet" href="css/sanphamprice.css">
-    <!-- <link rel="stylesheet" href="css/price.css"> -->
-    <link rel="stylesheet" href="css/sanpham.css">
-
+    
+    <link rel="stylesheet" th:href="@{/css/sanpham.css}">
 
 </head>
 
@@ -134,9 +132,9 @@
                                         class="ms-1" aria-label="Default select example"
                                         onchange="this.form.submit()"
                                     >
-                                        <option selected>Sắp xếp</option>
-                                        <option value="price.ASC">Giá tăng dần</option>
-                                        <option value="price.DESC">Giá giảm dần</option>
+                                        <option th:selected="${sort == 'name'}" value="name">Sắp xếp</option>
+                                        <option th:selected="${sort == 'price.ASC'}" value="price.ASC">Giá tăng dần</option>
+                                        <option th:selected="${sort == 'price.DESC'}" value="price.DESC">Giá giảm dần</option>
                                     </select>
                                 </div>
                             </form>
@@ -193,22 +191,22 @@
                             <ul class="pagination">
                                 <li th:class="${1 == (productPage.number + 1) ? 'page-item active' : 'page-item'}">
                                     <a class="page-link"
-                                        th:href="@{/products(catergoryId = ${catergoryId}, size = ${productPage.size}, page=${1} )}"
+                                        th:href="@{/products(sort= ${sort}, nameSearch = ${nameSearch},catergoryId = ${catergoryId}, size = ${productPage.size}, page=${1} )}"
                                         href="#" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
                                 <li th:if="${productPage.totalPages > 1}" th:each="pageNumber : ${pageNumbers}"
-                                    th:class="${productPage.totalPages == productPage.number + 1 ? 'page-item active' : 'page-item'}">
+                                    th:class="${pageNumber == (productPage.number + 1) ? 'page-item active' : 'page-item'}">
                                     <a class="page-link"
-                                        th:href="@{/products(catergoryId = ${catergoryId}, size = ${productPage.size}, page=${pageNumber} )}"
+                                        th:href="@{/products(sort= ${sort}, nameSearch = ${nameSearch},catergoryId = ${catergoryId}, size = ${productPage.size}, page=${pageNumber} )}"
                                         th:text="${pageNumber}"></a>
                                 </li>
 
                                 <li th:if="${!(productPage.totalPages == 1)}"
-                                    th:class="${productPage.totalPages == productPage.number + 1 ? 'page-item active' : 'page-item'}">
+                                    th:class="${productPage.totalPages == (productPage.number + 1) ? 'page-item active' : 'page-item'}">
                                     <a class="page-link"
-                                        th:href="@{/products(catergoryId = ${catergoryId}, size = ${productPage.size}, page=${productPage.totalPages} )}"
+                                        th:href="@{/products(sort= ${sort}, nameSearch = ${nameSearch},catergoryId = ${catergoryId}, size = ${productPage.size}, page=${productPage.totalPages} )}"
                                         href="#" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
