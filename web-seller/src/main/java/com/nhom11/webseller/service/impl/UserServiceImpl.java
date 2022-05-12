@@ -32,10 +32,17 @@ public class UserServiceImpl implements UserService{
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
         user.setAuthorities(userDto.getAuthorities());
+        user.setImage(userDto.getImage());
         UUID uuid = UUID.randomUUID();
 		String uuString = uuid.toString();
-        user.setImage(storageService.getStoredFilename(userDto.getImageFile(), uuString));
-        storageService.store(userDto.getImageFile(), user.getImage());
+       
+        if(!userDto.getImageFile().isEmpty()) {
+        	user.setImage(storageService.getStoredFilename(userDto.getImageFile(), uuString));
+         	storageService.store(userDto.getImageFile(), user.getImage());
+        }
+        	
+
+        	
         userRepository.save(user);
     }
 

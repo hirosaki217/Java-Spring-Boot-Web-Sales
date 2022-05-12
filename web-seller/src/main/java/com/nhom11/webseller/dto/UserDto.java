@@ -47,8 +47,9 @@ public class UserDto implements Serializable{
 	
 	private Date registeredAt;
 
+	@NotEmpty
     private MultipartFile imageFile;
-	private String image;
+	private String image = "default-user.png";
 
 	private int role;
 }

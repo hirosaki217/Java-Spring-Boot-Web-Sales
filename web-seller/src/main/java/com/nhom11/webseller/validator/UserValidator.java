@@ -41,7 +41,7 @@ public class UserValidator implements Validator{
         if (!user.getPasswordConfirm().equals(user.getPassword())) {
             errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
         }
-        
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "imageFile", "NotEmpty");
         if(user.getImageFile() == null) {
         	errors.rejectValue("imageFile", "Diff.userForm.imageFile");
         }

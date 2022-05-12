@@ -38,9 +38,9 @@ public class UserController {
 
     @GetMapping("/registration")
     public String registration(Model model) {
-        if (securityService.isAuthenticated()) {
-            return "redirect:/";
-        }
+//        if (securityService.isAuthenticated()) {
+//            return "redirect:/";
+//        }
 
         model.addAttribute("userForm", new UserDto());
 
@@ -52,7 +52,7 @@ public class UserController {
         userValidator.validate(userForm, bindingResult);
         
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return "/admin/user/registration";
         }
         userForm.setAuthorities(getAuthorities(userForm.getRole()));
         userService.save(userForm);
